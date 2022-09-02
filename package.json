@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/rel-ativi/back-end_api_relativi#readme",
   "dependencies": {
+    "class-transformer": "^0.5.1",
     "express": "^4.18.1"
   },
   "devDependencies": {
