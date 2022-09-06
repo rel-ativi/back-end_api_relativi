@@ -39,8 +39,6 @@ export class Address {
   @ManyToOne(() => Country, { eager: true })
   country: Country;
 
-  @OneToOne(() => Activity || Profile, (entity) => entity.address, {
-    eager: true,
-  })
+  @OneToOne(() => Activity || Profile, (entity) => entity.address)
   address_of: Activity | Profile;
 }
