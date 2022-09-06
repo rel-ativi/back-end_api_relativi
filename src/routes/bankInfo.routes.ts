@@ -1,24 +1,27 @@
 import { Router } from "express";
 
+import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
+import { proUserStatusMiddleware } from "../middlewares/proUserStatus.middleware";
+
 const routes = Router();
 
 export const bankInfoRoutes = () => {
   routes.post(
-    ""
-    // verify auth middleware
-    // verify pro-user status middleware
+    "",
+    authStatusMiddleware,
+    proUserStatusMiddleware
     // schema validation middleware
     // create controller
   );
   routes.patch(
-    ""
-    // verify auth middleware
-    // verify pro-user status middleware
+    "",
+    authStatusMiddleware,
+    proUserStatusMiddleware
     // update controller
   );
   routes.delete(
-    ""
-    // verify auth middleware
+    "",
+    authStatusMiddleware
     // delete controller
   );
 

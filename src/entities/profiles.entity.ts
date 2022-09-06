@@ -9,13 +9,13 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-import { Activity } from "../activities";
-import { Address } from "../adresses";
-import { BankInfo } from "../bank_info";
-import { PaymentInfo } from "../payment_info";
-import { ActivityHistory } from "../user_activity_history";
-import { Certification } from "../user_certifications";
-import { UserSchedule } from "../user_schedule";
+import { Activity } from "./activities.entity";
+import { Address } from "./addresses.entity";
+import { BankInfo } from "./bank_info.entity";
+import { PaymentInfo } from "./payment_info.entity";
+import { ActivityHistory } from "./user_activity_history.entity";
+import { Certification } from "./user_certifications.entity";
+import { UserSchedule } from "./user_schedule.entity";
 
 @Entity("profiles")
 export class Profile {

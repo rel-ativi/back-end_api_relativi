@@ -1,22 +1,24 @@
 import { Router } from "express";
 
+import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
+
 const routes = Router();
 
 export const paymentInfoRoutes = () => {
   routes.post(
-    ""
-    // verify auth middleware
+    "",
+    authStatusMiddleware
     // schema validation middleware
     // create controller
   );
   routes.patch(
-    ""
-    // verify auth middleware
+    "",
+    authStatusMiddleware
     // update controller
   );
   routes.delete(
-    ""
-    // verify auth middleware
+    "",
+    authStatusMiddleware
     // delete controller
   );
 

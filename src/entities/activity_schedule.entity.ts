@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-import { Day } from "../days";
+import { Day } from "./days.entity";
 
 @Entity("activity_schedule")
 export class ActivitySchedule {

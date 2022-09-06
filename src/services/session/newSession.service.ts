@@ -2,7 +2,7 @@ import { compare } from "bcryptjs";
 import "dotenv/config";
 import jwt from "jsonwebtoken";
 
-import { User } from "../../entities/users";
+import { User } from "../../entities/users.entity";
 import { AppError } from "../../errors/AppError";
 import { IUserLogin } from "../../interfaces/users";
 

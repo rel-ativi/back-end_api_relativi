@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 
-import { Activity } from "../activities";
-import { Profile } from "../profiles";
+import { Activity } from "./activities.entity";
+import { Profile } from "./profiles.entity";
 
 @Entity("user_activity_history")
 export class ActivityHistory {
