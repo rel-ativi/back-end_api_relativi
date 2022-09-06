@@ -5,3 +5,8 @@ export interface IUserRequest {
   is_adm?: boolean;
   is_pro_user?: boolean;
 }
+
+export interface IUserLogin {
+  email: string;
+  password: string;
+}
