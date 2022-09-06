@@ -17,7 +17,7 @@ describe("List users", () => {
 
     afterAll(async () => await connection.destroy())
 
-    test("", async () => {
+    test("Trying to list users", async () => {
 
         const response = await request(app).get("/users")
 

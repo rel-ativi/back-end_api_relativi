@@ -1,17 +1,18 @@
-interface UserCreate {
-    name: string
-    email: string
-    password: string
-    is_pro_user: boolean
-    is_active: boolean
-    is_adm: boolean
-}
+import { IUserRequest } from "../../interfaces/users"
 
-export const userCreate: UserCreate = {
+
+export const userCreate: IUserRequest = {
     name: "example",
     email: "example@org.com.br",
     password: "*)#Ygafbius241",
-    is_pro_user: false,
-    is_active: true,
-    is_adm: true
+    is_adm: true,
+    is_pro_user: false
+}
+
+export const userUpdate: IUserRequest = {
+    name: "example",
+    email: "example@org.com.br",
+    password: "*)#Ygafbius241",
+    is_adm: false,
+    is_pro_user: true
 }
