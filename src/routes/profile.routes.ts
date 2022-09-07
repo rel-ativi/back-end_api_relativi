@@ -1,5 +1,7 @@
 import { Router } from "express";
 
+import { createScheduleController } from "../controllers/schedule.controllers";
+
 const routes = Router();
 
 export const profileRoutes = () => {
@@ -14,12 +16,7 @@ export const profileRoutes = () => {
     // verify auth middleware
     // add/remove user to favorites controller
   );
-  routes.post(
-    "/schedule/:id" //activity id
-    // verify auth middleware
-    // schema validation middleware
-    // schedule activity controller
-  );
+  routes.post("/schedule/:activityId", createScheduleController);
   routes.get(
     "/schedule"
     // verify auth middleware
