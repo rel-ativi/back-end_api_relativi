@@ -18,7 +18,7 @@ describe("Create a user", () => {
 
     afterAll(async () => await connection.destroy())
 
-    test("Trying to create a user", async () => {
+    test(" Must be able to create a user", async () => {
 
         const response = await request(app).post("/users").send(userCreate)
 
@@ -37,5 +37,13 @@ describe("Create a user", () => {
                 profile_id: response.body.profile_id
             })
         )
+    })
+
+    test("Should not be able to create a user that already exists", async () => {
+
+        const response = await request(app).post("/users").send(userCreate)
+
+        expect(response.status).toBe(400)
+        expect(response.body).toHaveProperty("message")
     })
 })

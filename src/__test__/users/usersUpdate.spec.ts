@@ -2,7 +2,7 @@ import request from "supertest"
 import app from "../../app"
 import { DataSource } from "typeorm"
 import AppDataSource from "../../data-source"
-import { userCreate, userUpdate } from "../mock"
+import { admLogin, notAdmLogin, userCreate, userCreateNotAdm, userUpdate } from "../mock"
 
 
 describe("Update a user", () => {
@@ -53,6 +53,52 @@ describe("Update a user", () => {
         const response = await request(app).patch("/users/1")
     
         expect(response.status).toEqual(404)
+        expect(response.body).toHaveProperty("message")
+    })
+    
+    test("Shouldn't be able to delete user with isActive = false", async () => {
+
+        await request(app).post("/users").send(userCreate)
+
+        const login = await request(app).post("/login").send(admLogin)
+        const userUpdated = await request(app).get("/users").set("Authorization", `Bearer ${login.body.token}`)
+
+        const response = await request(app).delete(`/users/${userUpdated.body.id}`).set("Authorization", `Bearer ${login.body.token}`)
+
+        expect(response.status).toBe(400)
+        expect(response.body).toHaveProperty("message")
+    })
+
+    test("Should not be able to delete user without authentication", async () => {
+
+        await request(app).post("/users").send(userCreate)
+
+        const response = await request(app).patch(`/users/${response1.body.id}`).send(userUpdate)
+
+        expect(response.status).toBe(401)
+        expect(response.body).toHaveProperty("message")
+    })
+
+    test("Should not be able to delete user not being admin", async () => {
+
+        await request(app).post("/users").send(userCreateNotAdm)
+
+        const login = await request(app).post("/login").send(notAdmLogin)
+        const response = await request(app).patch(`/users/${response1.body.id}`).send(userUpdate).set("Authorization", `Bearer ${login.body.token}`)
+
+        expect(response.status).toBe(403)
+        expect(response.body).toHaveProperty("message")
+    })
+
+    test("Should not be able to delete user with invalid id", async () => {
+
+        await request(app).post("/users").send(userCreate)
+
+        const login = await request(app).post("/login").send(admLogin)
+
+        const response = await request(app).patch(`/users/13970660-5dbe-423a-9a9d-5c23b37943cf`).send(userUpdate).set("Authorization", `Bearer ${login.body.token}`)
+
+        expect(response.status).toBe(404)
         expect(response.body).toHaveProperty("message")
     })
 })
