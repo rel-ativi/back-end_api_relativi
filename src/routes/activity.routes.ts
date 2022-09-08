@@ -4,7 +4,11 @@ import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
 import { proUserStatusMiddleware } from "../middlewares/proUserStatus.middleware";
 import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
-import { activitySchema } from "../schemas/activities.schema";
+import {
+  activityScheduleSchema,
+  activitySchema,
+} from "../schemas/activities.schema";
+import { nameNumberSchema, nameOnlySchema } from "../schemas/generic.schema";
 
 const routes = Router();
 
@@ -14,21 +18,27 @@ export const activityRoutes = () => {
     authStatusMiddleware,
     proUserStatusMiddleware,
     schemaValidationMiddleware(activitySchema)
-    // schema validation middleware
     // create controller
+  );
+  routes.post(
+    "/schedule",
+    authStatusMiddleware,
+    proUserStatusMiddleware,
+    schemaValidationMiddleware(activityScheduleSchema)
+    // create schedule controller
   );
   routes.post(
     "/day",
     authStatusMiddleware,
-    admStatusMiddleware
-    // schema validation middleware
+    admStatusMiddleware,
+    schemaValidationMiddleware(nameNumberSchema)
     // create day controller
   );
   routes.post(
     "/category",
     authStatusMiddleware,
-    admStatusMiddleware
-    // schema validation middleware
+    admStatusMiddleware,
+    schemaValidationMiddleware(nameOnlySchema)
     // create category controller
   );
   routes.get(
@@ -37,17 +47,35 @@ export const activityRoutes = () => {
     proUserStatusMiddleware
     // read (list all activities from that user) controller
   );
-  routes.patch(
-    "/:id",
+  routes.get(
+    "/schedule",
     authStatusMiddleware,
     proUserStatusMiddleware
-    // update controller
+    // read (list all schedules from that activity) controller
+  );
+  routes.patch(
+    "/:id", // activity id
+    authStatusMiddleware,
+    proUserStatusMiddleware
+    // update activity controller
+  );
+  routes.patch(
+    "/schedule/:id", // schedule id
+    authStatusMiddleware,
+    proUserStatusMiddleware
+    // update activity_schedule controller
   );
   routes.delete(
-    "",
+    "/:id", // activity id
     authStatusMiddleware,
     proUserStatusMiddleware
-    // delete controller
+    // delete activity controller
+  );
+  routes.delete(
+    "/schedule/:id", // activity_schedule id
+    authStatusMiddleware,
+    proUserStatusMiddleware
+    // delete activity_schedule controller
   );
   routes.delete(
     "/day/:id",

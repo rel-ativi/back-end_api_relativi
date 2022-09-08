@@ -15,11 +15,8 @@ export interface IActivityRequest {
   recurrent: boolean;
   starting_date: string;
   address: IAddressRequest;
-  activity_schedule: IActivitySchedule;
+  activity_schedule_id?: string;
   image?: string;
 }
 
-export type IActivitySchema = Omit<
-  IActivityRequest,
-  "address" | "activity_schedule" | "image"
->;
+export type IActivitySchema = Omit<IActivityRequest, "image">;
