@@ -5,6 +5,9 @@ import {
   createActivityScheduleController,
   createCategoryController,
   createDayController,
+  deleteActivityScheduleController,
+  deleteCategoryController,
+  deleteDayController,
 } from "../controllers/activity.controllers";
 import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
@@ -80,20 +83,20 @@ export const activityRoutes = () => {
   routes.delete(
     "/schedule/:id", // activity_schedule id
     authStatusMiddleware,
-    proUserStatusMiddleware
-    // delete activity_schedule controller
+    proUserStatusMiddleware,
+    deleteActivityScheduleController
   );
   routes.delete(
     "/day/:id",
     authStatusMiddleware,
-    admStatusMiddleware
-    // delete day controller
+    admStatusMiddleware,
+    deleteDayController
   );
   routes.delete(
     "/category/:id",
     authStatusMiddleware,
-    admStatusMiddleware
-    // delete category controller
+    admStatusMiddleware,
+    deleteCategoryController
   );
 
   return routes;
