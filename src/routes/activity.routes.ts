@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { createActivityController } from "../controllers/activity.controllers";
+import {
+  createActivityController,
+  createActivityScheduleController,
+} from "../controllers/activity.controllers";
 
 import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
@@ -22,11 +25,11 @@ export const activityRoutes = () => {
     createActivityController
   );
   routes.post(
-    "/schedule",
+    "/:id/schedule", // activity id
     authStatusMiddleware,
     proUserStatusMiddleware,
-    schemaValidationMiddleware(activityScheduleSchema)
-    // create schedule controller
+    schemaValidationMiddleware(activityScheduleSchema),
+    createActivityScheduleController
   );
   routes.post(
     "/day",
@@ -49,10 +52,10 @@ export const activityRoutes = () => {
     // read (list all activities from that user) controller
   );
   routes.get(
-    "/schedule",
+    "/:id/schedule", // activity id
     authStatusMiddleware,
     proUserStatusMiddleware
-    // read (list all schedules from that activity) controller
+    // read (list schedule from that activity) controller
   );
   routes.patch(
     "/:id", // activity id
@@ -61,7 +64,7 @@ export const activityRoutes = () => {
     // update activity controller
   );
   routes.patch(
-    "/schedule/:id", // schedule id
+    ":id/schedule/", // activity id
     authStatusMiddleware,
     proUserStatusMiddleware
     // update activity_schedule controller

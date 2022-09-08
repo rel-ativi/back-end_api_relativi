@@ -47,6 +47,12 @@ const createActivityService = async ({
     await addressRepo.save(newAddress);
   }
 
+  const starting = new Date(starting_date);
+  const now = new Date(Date.now());
+  if (starting < now) {
+    throw new AppError("Invalid starting date");
+  }
+
   const schedule = schedules.find((sch) => sch.id === activity_schedule_id);
 
   const activity = new Activity();
