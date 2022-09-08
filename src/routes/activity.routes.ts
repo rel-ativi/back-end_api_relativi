@@ -1,9 +1,11 @@
 import { Router } from "express";
+
 import {
   createActivityController,
   createActivityScheduleController,
+  createCategoryController,
+  createDayController,
 } from "../controllers/activity.controllers";
-
 import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
 import { proUserStatusMiddleware } from "../middlewares/proUserStatus.middleware";
@@ -35,15 +37,15 @@ export const activityRoutes = () => {
     "/day",
     authStatusMiddleware,
     admStatusMiddleware,
-    schemaValidationMiddleware(nameNumberSchema)
-    // create day controller
+    schemaValidationMiddleware(nameNumberSchema),
+    createDayController
   );
   routes.post(
     "/category",
     authStatusMiddleware,
     admStatusMiddleware,
-    schemaValidationMiddleware(nameOnlySchema)
-    // create category controller
+    schemaValidationMiddleware(nameOnlySchema),
+    createCategoryController
   );
   routes.get(
     "",
