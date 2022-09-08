@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { createActivityController } from "../controllers/activity.controllers";
 
 import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
@@ -17,8 +18,8 @@ export const activityRoutes = () => {
     "",
     authStatusMiddleware,
     proUserStatusMiddleware,
-    schemaValidationMiddleware(activitySchema)
-    // create controller
+    schemaValidationMiddleware(activitySchema),
+    createActivityController
   );
   routes.post(
     "/schedule",
