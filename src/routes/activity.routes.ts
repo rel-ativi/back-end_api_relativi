@@ -1,7 +1,10 @@
 import { Router } from "express";
+
 import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
 import { proUserStatusMiddleware } from "../middlewares/proUserStatus.middleware";
+import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
+import { activitySchema } from "../schemas/activities.schema";
 
 const routes = Router();
 
@@ -9,7 +12,8 @@ export const activityRoutes = () => {
   routes.post(
     "",
     authStatusMiddleware,
-    proUserStatusMiddleware
+    proUserStatusMiddleware,
+    schemaValidationMiddleware(activitySchema)
     // schema validation middleware
     // create controller
   );

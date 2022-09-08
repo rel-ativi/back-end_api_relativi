@@ -1,41 +1,46 @@
 import { Router } from "express";
+
 import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
+import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
+import { addressSchema } from "../schemas/address.schema";
+import { nameOnlySchema } from "../schemas/generic.schema";
 
 const routes = Router();
 
 export const addressRoutes = () => {
   routes.post(
-    ""
-    // schema validation middleware
+    "",
+    authStatusMiddleware,
+    schemaValidationMiddleware(addressSchema)
     // create controller
   );
   routes.post(
     "/district",
     authStatusMiddleware,
-    admStatusMiddleware
-    // schema validation middleware
+    admStatusMiddleware,
+    schemaValidationMiddleware(nameOnlySchema)
     // create controller
   );
   routes.post(
     "/city",
     authStatusMiddleware,
-    admStatusMiddleware
-    // schema validation middleware
+    admStatusMiddleware,
+    schemaValidationMiddleware(nameOnlySchema)
     // create controller
   );
   routes.post(
     "/state",
     authStatusMiddleware,
-    admStatusMiddleware
-    // schema validation middleware
+    admStatusMiddleware,
+    schemaValidationMiddleware(nameOnlySchema)
     // create controller
   );
   routes.post(
     "/country",
     authStatusMiddleware,
-    admStatusMiddleware
-    // schema validation middleware
+    admStatusMiddleware,
+    schemaValidationMiddleware(nameOnlySchema)
     // create controller
   );
   routes.get(

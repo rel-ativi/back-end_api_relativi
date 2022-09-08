@@ -2,6 +2,8 @@ import { Router } from "express";
 
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
 import { proUserStatusMiddleware } from "../middlewares/proUserStatus.middleware";
+import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
+import { bankInfoSchema } from "../schemas/bankInfo.schema";
 
 const routes = Router();
 
@@ -9,8 +11,8 @@ export const bankInfoRoutes = () => {
   routes.post(
     "",
     authStatusMiddleware,
-    proUserStatusMiddleware
-    // schema validation middleware
+    proUserStatusMiddleware,
+    schemaValidationMiddleware(bankInfoSchema)
     // create controller
   );
   routes.patch(
