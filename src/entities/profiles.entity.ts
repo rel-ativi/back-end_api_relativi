@@ -9,13 +9,13 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-import { Activity } from "../activities";
-import { Address } from "../adresses";
-import { BankInfo } from "../bank_info";
-import { PaymentInfo } from "../payment_info";
-import { ActivityHistory } from "../user_activity_history";
-import { Certification } from "../user_certifications";
-import { UserSchedule } from "../user_schedule";
+import { Activity } from "./activities.entity";
+import { Address } from "./addresses.entity";
+import { BankInfo } from "./bank_info.entity";
+import { PaymentInfo } from "./payment_info.entity";
+import { ActivityHistory } from "./user_activity_history.entity";
+import { Certification } from "./user_certifications.entity";
+import { UserSchedule } from "./user_schedule.entity";
 
 @Entity("profiles")
 export class Profile {
@@ -40,13 +40,19 @@ export class Profile {
   @JoinColumn()
   payment_info_id: PaymentInfo;
 
-  @OneToMany(() => Certification, (certifications) => certifications.profile)
+  @OneToMany(() => Certification, (certifications) => certifications.profile, {
+    eager: true,
+  })
   certifications: Certification[];
 
-  @OneToMany(() => UserSchedule, (schedule) => schedule.profile)
+  @OneToMany(() => UserSchedule, (schedule) => schedule.profile, {
+    eager: true,
+  })
   scheduled_activities: UserSchedule[];
 
-  @OneToMany(() => ActivityHistory, (schedule) => schedule.profile)
+  @OneToMany(() => ActivityHistory, (schedule) => schedule.profile, {
+    eager: true,
+  })
   activity_history: ActivityHistory[];
 
   @ManyToMany(() => Activity, { eager: true })

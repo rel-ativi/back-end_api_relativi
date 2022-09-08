@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-import { Profile } from "../profiles";
+import { Profile } from "./profiles.entity";
 
 @Entity("user_certifications")
 export class Certification {
@@ -19,6 +19,6 @@ export class Certification {
   @Column({ type: "date", nullable: true })
   expiration_date?: string;
 
-  @ManyToOne(() => Profile, { eager: true })
+  @ManyToOne(() => Profile)
   profile: Profile;
 }

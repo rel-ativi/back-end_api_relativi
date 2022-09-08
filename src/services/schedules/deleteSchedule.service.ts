@@ -1,5 +1,5 @@
 import AppDataSource from "../../data-source";
-import { UserSchedule } from "../../entities/user_schedule";
+import { UserSchedule } from "../../entities/user_schedule.entity";
 
 import { AppError } from "../../errors/AppError";
 

@@ -1,8 +1,8 @@
 import AppDataSource from "../../data-source";
-import { UserSchedule } from "../../entities/user_schedule";
+import { UserSchedule } from "../../entities/user_schedule.entity";
 
-import { Activity } from "../../entities/activities";
-import { Profile } from "../../entities/profiles";
+import { Activity } from "../../entities/activities.entity";
+import { Profile } from "../../entities/profiles.entity";
 import { AppError } from "../../errors/AppError";
 import { IScheduleRequest } from "../../interfaces/generic";
 

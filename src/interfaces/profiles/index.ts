@@ -9,3 +9,14 @@ export interface IProfile {
   bank_info?: IBankInfo;
   payment_info?: IPaymentInfo;
 }
+
+export interface IProfileSchema
+  extends Omit<IProfile, "address" | "bank_info" | "payment_info"> {
+  address?: string;
+  bank_info?: string;
+  payment_info?: string;
+}
+
+export interface IUserScheduleRequest {
+  date: Date;
+}

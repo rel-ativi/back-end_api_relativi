@@ -10,11 +10,11 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
-import { ActivitySchedule } from "../activity_schdule";
-import { Address } from "../adresses";
-import { Category } from "../categories";
-import { ActivityHistory } from "../user_activity_history";
-import { UserSchedule } from "../user_schedule";
+import { ActivitySchedule } from "./activity_schedule.entity";
+import { Address } from "./addresses.entity";
+import { Category } from "./categories.entity";
+import { ActivityHistory } from "./user_activity_history.entity";
+import { UserSchedule } from "./user_schedule.entity";
 
 @Entity("activities")
 export class Activity {
