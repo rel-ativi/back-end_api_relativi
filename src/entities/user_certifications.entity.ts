@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-import { Profile } from "../profiles";
+import { Profile } from "./profiles.entity";
 
 @Entity("user_certifications")
 export class Certification {
