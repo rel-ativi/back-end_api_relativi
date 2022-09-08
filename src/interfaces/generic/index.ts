@@ -21,3 +21,7 @@ export class ISchedule {
   hour: string;
   id: string;
 }
+
+export class IIdOnly {
+  id: string;
+}

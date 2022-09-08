@@ -1,10 +1,10 @@
-import AppDataSource from "../data-source";
-import { UserSchedule } from "../entities/user_schedule";
+import AppDataSource from "../../data-source";
+import { UserSchedule } from "../../entities/user_schedule";
 
-import { Activity } from "../entities/activities";
-import { Profile } from "../entities/profiles";
-import { AppError } from "../errors/AppError";
-import { IScheduleRequest } from "../interfaces/generic";
+import { Activity } from "../../entities/activities";
+import { Profile } from "../../entities/profiles";
+import { AppError } from "../../errors/AppError";
+import { IScheduleRequest } from "../../interfaces/generic";
 
 const createScheduleService = async ({
   activityId,
@@ -38,14 +38,19 @@ const createScheduleService = async ({
     throw new AppError("activity not found", 404);
   }
 
+  const requiredDate = new Date(date);
+  const initialDate = new Date(activity!.starting_date);
+
+  if (requiredDate < initialDate) {
+    throw new AppError("Unvaible date");
+  }
+
   const schedule = new UserSchedule();
 
   schedule.date = date;
   schedule.hour = hour;
   schedule.profile = profile;
   schedule.activity = activity;
-
-  console.log(schedule, "3: schedule criado no service");
 
   scheduleRepository.create(schedule);
   await scheduleRepository.save(schedule);

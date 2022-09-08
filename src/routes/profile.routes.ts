@@ -1,6 +1,8 @@
 import { Router } from "express";
 
 import { createScheduleController } from "../controllers/schedule.controllers";
+import { listScheduleController } from "../controllers/schedule.controllers";
+import { deleteScheduleController } from "../controllers/schedule.controllers";
 
 const routes = Router();
 
@@ -17,11 +19,9 @@ export const profileRoutes = () => {
     // add/remove user to favorites controller
   );
   routes.post("/schedule/:activityId", createScheduleController);
-  routes.get(
-    "/schedule"
-    // verify auth middleware
-    // list user schedule controller
-  );
+  routes.get("/schedule", listScheduleController);
+  routes.delete("/schedule/:id", deleteScheduleController);
+
   routes.get(
     "/history"
     // verify auth middleware
