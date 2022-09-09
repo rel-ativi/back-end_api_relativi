@@ -1,97 +1,104 @@
 import { Router } from "express";
 
+import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
+import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
+import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
+import { addressSchema } from "../schemas/address.schema";
+import { nameOnlySchema } from "../schemas/generic.schema";
+
 const routes = Router();
 
 export const addressRoutes = () => {
   routes.post(
-    ""
-    // schema validation middleware
+    "",
+    authStatusMiddleware,
+    schemaValidationMiddleware(addressSchema)
     // create controller
   );
   routes.post(
-    "/district"
-    // verify auth middleware
-    // verify adm status middleware
-    // schema validation middleware
+    "/district",
+    authStatusMiddleware,
+    admStatusMiddleware,
+    schemaValidationMiddleware(nameOnlySchema)
     // create controller
   );
   routes.post(
-    "/city"
-    // verify auth middleware
-    // verify adm status middleware
-    // schema validation middleware
+    "/city",
+    authStatusMiddleware,
+    admStatusMiddleware,
+    schemaValidationMiddleware(nameOnlySchema)
     // create controller
   );
   routes.post(
-    "/state"
-    // verify auth middleware
-    // verify adm status middleware
-    // schema validation middleware
+    "/state",
+    authStatusMiddleware,
+    admStatusMiddleware,
+    schemaValidationMiddleware(nameOnlySchema)
     // create controller
   );
   routes.post(
-    "/country"
-    // verify auth middleware
-    // verify adm status middleware
-    // schema validation middleware
+    "/country",
+    authStatusMiddleware,
+    admStatusMiddleware,
+    schemaValidationMiddleware(nameOnlySchema)
     // create controller
   );
   routes.get(
-    "/district"
-    // verify auth middleware
-    // verify adm status middleware
+    "/district",
+    authStatusMiddleware,
+    admStatusMiddleware
     // list all controller
   );
   routes.get(
-    "/city"
-    // verify auth middleware
-    // verify adm status middleware
+    "/city",
+    authStatusMiddleware,
+    admStatusMiddleware
     // list all controller
   );
   routes.get(
-    "/state"
-    // verify auth middleware
-    // verify adm status middleware
+    "/state",
+    authStatusMiddleware,
+    admStatusMiddleware
     // list all controller
   );
   routes.get(
-    "/country"
-    // verify auth middleware
-    // verify adm status middleware
+    "/country",
+    authStatusMiddleware,
+    admStatusMiddleware
     // list all controller
   );
   routes.patch(
-    "/:id"
-    // verify auth middleware
+    "/:id",
+    authStatusMiddleware
     // update controller
   );
   routes.delete(
-    "/:id"
-    // verify auth middleware
+    "/:id",
+    authStatusMiddleware
     // delete controller
   );
   routes.delete(
-    "/district/:id"
-    // verify auth middleware
-    // verify adm status middleware
+    "/district/:id",
+    authStatusMiddleware,
+    admStatusMiddleware
     // delete controller
   );
   routes.delete(
-    "/city/:id"
-    // verify auth middleware
-    // verify adm status middleware
+    "/city/:id",
+    authStatusMiddleware,
+    admStatusMiddleware
     // delete controller
   );
   routes.delete(
-    "/state/:id"
-    // verify auth middleware
-    // verify adm status middleware
+    "/state/:id",
+    authStatusMiddleware,
+    admStatusMiddleware
     // delete controller
   );
   routes.delete(
-    "/country/:id"
-    // verify auth middleware
-    // verify adm status middleware
+    "/country/:id",
+    authStatusMiddleware,
+    admStatusMiddleware
     // delete controller
   );
 

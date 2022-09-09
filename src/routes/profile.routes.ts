@@ -1,41 +1,48 @@
 import { Router } from "express";
 
+import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
+import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
+import { profileSchema, userScheduleSchema } from "../schemas/profile.schema";
+
 const routes = Router();
 
 export const profileRoutes = () => {
   routes.post(
-    ""
-    // verify auth middleware
-    // schema validation middleware
+    "",
+    authStatusMiddleware,
+    schemaValidationMiddleware(profileSchema)
     // create controller
   );
   routes.post(
-    "/favorite/:id" //activity id
-    // verify auth middleware
-    // add/remove user to favorites controller
+    "/favorite/:id", //activity id
+    authStatusMiddleware
+    // add/remove activity to favorites controller
   );
   routes.post(
-    "/schedule/:id" //activity id
-    // verify auth middleware
-    // schema validation middleware
+    "/schedule/:id", //activity id
+    authStatusMiddleware,
+    schemaValidationMiddleware(userScheduleSchema)
     // schedule activity controller
   );
   routes.get(
-    "/schedule"
-    // verify auth middleware
+    "/schedule",
+    authStatusMiddleware
     // list user schedule controller
   );
   routes.get(
-    "/history"
-    // verify auth middleware
-    // list user activity histroy controller
+    "/history",
+    authStatusMiddleware
+    // list user activity history controller
   );
-
   routes.patch(
-    ""
-    // verify auth middleware
+    "",
+    authStatusMiddleware
     // update controller (only bio and phone)
   );
-
+  routes.delete(
+    "/schedule/:id", //activity id
+    authStatusMiddleware
+    // delete activity_schedule controller
+  );
   return routes;
 };

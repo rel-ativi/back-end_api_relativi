@@ -6,12 +6,12 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-import { Activity } from "../activities";
-import { City } from "../cities";
-import { Country } from "../countries";
-import { District } from "../districts";
-import { Profile } from "../profiles";
-import { State } from "../states";
+import { Activity } from "./activities.entity";
+import { City } from "./cities.entity";
+import { Country } from "./countries.entity";
+import { District } from "./districts.entity";
+import { Profile } from "./profiles.entity";
+import { State } from "./states.entity";
 
 @Entity("addresses")
 export class Address {
