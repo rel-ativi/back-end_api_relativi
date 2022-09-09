@@ -1,9 +1,14 @@
 import { Router } from "express";
+import {
+  createUserController,
+  deleteUserController,
+} from "../controllers/user.controllers";
 
 import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
 import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
 import { userSchema } from "../schemas/user.schema";
+import listUsersService from "../services/users/listUsers.service";
 
 const routes = Router();
 
@@ -11,15 +16,10 @@ export const userRoutes = () => {
   routes.post(
     // internal use only
     "",
-    schemaValidationMiddleware(userSchema)
-    // create controller
+    schemaValidationMiddleware(userSchema),
+    createUserController
   );
-  routes.get(
-    "",
-    authStatusMiddleware,
-    admStatusMiddleware
-    // read (list all users) controller
-  );
+  routes.get("", authStatusMiddleware, admStatusMiddleware, listUsersService);
   routes.get(
     "/profile",
     authStatusMiddleware
@@ -30,11 +30,7 @@ export const userRoutes = () => {
     authStatusMiddleware
     // update controller
   );
-  routes.delete(
-    "",
-    authStatusMiddleware
-    // soft-delete controller
-  );
+  routes.delete("", authStatusMiddleware, deleteUserController);
 
   return routes;
 };
