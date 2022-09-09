@@ -1,14 +1,16 @@
 import { Router } from "express";
 
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
+import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
+import { profileSchema, userScheduleSchema } from "../schemas/profile.schema";
 
 const routes = Router();
 
 export const profileRoutes = () => {
   routes.post(
     "",
-    authStatusMiddleware
-    // schema validation middleware
+    authStatusMiddleware,
+    schemaValidationMiddleware(profileSchema)
     // create controller
   );
   routes.post(
@@ -18,8 +20,8 @@ export const profileRoutes = () => {
   );
   routes.post(
     "/schedule/:id", //activity id
-    authStatusMiddleware
-    // schema validation middleware
+    authStatusMiddleware,
+    schemaValidationMiddleware(userScheduleSchema)
     // schedule activity controller
   );
   routes.get(

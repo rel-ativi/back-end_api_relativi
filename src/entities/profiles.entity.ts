@@ -40,13 +40,19 @@ export class Profile {
   @JoinColumn()
   payment_info_id: PaymentInfo;
 
-  @OneToMany(() => Certification, (certifications) => certifications.profile)
+  @OneToMany(() => Certification, (certifications) => certifications.profile, {
+    eager: true,
+  })
   certifications: Certification[];
 
-  @OneToMany(() => UserSchedule, (schedule) => schedule.profile)
+  @OneToMany(() => UserSchedule, (schedule) => schedule.profile, {
+    eager: true,
+  })
   scheduled_activities: UserSchedule[];
 
-  @OneToMany(() => ActivityHistory, (schedule) => schedule.profile)
+  @OneToMany(() => ActivityHistory, (schedule) => schedule.profile, {
+    eager: true,
+  })
   activity_history: ActivityHistory[];
 
   @ManyToMany(() => Activity, { eager: true })

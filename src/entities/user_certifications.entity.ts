@@ -19,6 +19,6 @@ export class Certification {
   @Column({ type: "date", nullable: true })
   expiration_date?: string;
 
-  @ManyToOne(() => Profile, { eager: true })
+  @ManyToOne(() => Profile)
   profile: Profile;
 }
