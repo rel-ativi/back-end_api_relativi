@@ -1,33 +1,27 @@
-import "dotenv/config";
-
-import { DataSource } from "typeorm";
-
-const AppDataSource = new DataSource(
-  process.env.NODE_ENV === "test"
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+require("dotenv/config");
+const typeorm_1 = require("typeorm");
+const AppDataSource = new typeorm_1.DataSource(process.env.NODE_ENV === "test"
     ? {
         type: "sqlite",
         database: ":memory:",
         synchronize: true,
         entities: ["src/entities/*.ts"],
-      }
+    }
     : {
         type: "postgres",
         url: process.env.DATABASE_URL,
-        ssl:
-          process.env.NODE_ENV === "production"
+        ssl: process.env.NODE_ENV === "production"
             ? { rejectUnauthorized: false }
             : false,
         logging: true,
         synchronize: false,
-        entities:
-          process.env.NODE_ENV === "production"
+        entities: process.env.NODE_ENV === "production"
             ? ["dist/entities/*.js"]
             : ["src/entities/*.ts"],
-        migrations:
-          process.env.NODE_ENV === "production"
+        migrations: process.env.NODE_ENV === "production"
             ? ["dist/migrations/*.js"]
             : ["src/migrations/*.ts"],
-      }
-);
-
-export default AppDataSource;
+    });
+exports.default = AppDataSource;
