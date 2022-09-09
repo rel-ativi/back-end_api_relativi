@@ -30,7 +30,7 @@ describe("List users", () => {
         expect(response.body).toHaveProperty("map")
     })
     
-    test("Should not be able to delete user without authentication", async () => {
+    test("Should not be able to list users without authentication", async () => {
 
         const response = await request(app).get("/users")
 
@@ -38,7 +38,7 @@ describe("List users", () => {
         expect(response.body).toHaveProperty("message")
     })
 
-    test("Should not be able to delete user not being admin", async () => {
+    test("Should not be able to list users not being admin", async () => {
 
         await request(app).post("/users").send(userCreateNotAdm)
 

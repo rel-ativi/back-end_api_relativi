@@ -1,3 +1,4 @@
+import { IProfile } from "../../interfaces/profiles"
 import { IUserRequest } from "../../interfaces/users"
 
 
@@ -32,4 +33,19 @@ export const admLogin = {
 export const notAdmLogin = {
     name: "example@gmail.com.br",
     email:"*)#Ygafbius241"
+}
+
+export const createProfile: IProfile = {
+    bio: "programador",
+    phone: "99 99999-9999",
+}
+
+export const updateProfile: IProfile = {
+    bio: "programador jr",
+    phone: "99 99999-9999",
+}
+
+export const createSchedules = {
+
+    
 }

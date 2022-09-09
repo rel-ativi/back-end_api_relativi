@@ -56,22 +56,20 @@ describe("Update a user", () => {
         expect(response.body).toHaveProperty("message")
     })
     
-    test("Shouldn't be able to delete user with isActive = false", async () => {
+    test("Shouldn't be able to update user with isActive = false", async () => {
 
         await request(app).post("/users").send(userCreate)
 
         const login = await request(app).post("/login").send(admLogin)
         const userUpdated = await request(app).get("/users").set("Authorization", `Bearer ${login.body.token}`)
 
-        const response = await request(app).delete(`/users/${userUpdated.body.id}`).set("Authorization", `Bearer ${login.body.token}`)
+        const response = await request(app).patch(`/users/${userUpdated.body.id}`).set("Authorization", `Bearer ${login.body.token}`)
 
         expect(response.status).toBe(400)
         expect(response.body).toHaveProperty("message")
     })
 
-    test("Should not be able to delete user without authentication", async () => {
-
-        await request(app).post("/users").send(userCreate)
+    test("Should not be able to update user without authentication", async () => {
 
         const response = await request(app).patch(`/users/${response1.body.id}`).send(userUpdate)
 
@@ -79,7 +77,7 @@ describe("Update a user", () => {
         expect(response.body).toHaveProperty("message")
     })
 
-    test("Should not be able to delete user not being admin", async () => {
+    test("Should not be able to update user not being admin", async () => {
 
         await request(app).post("/users").send(userCreateNotAdm)
 
@@ -90,7 +88,7 @@ describe("Update a user", () => {
         expect(response.body).toHaveProperty("message")
     })
 
-    test("Should not be able to delete user with invalid id", async () => {
+    test("Should not be able to update user with invalid id", async () => {
 
         await request(app).post("/users").send(userCreate)
 
