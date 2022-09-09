@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 
-import { IActivityRequest, IActivitySchedule } from "../interfaces/activities";
+import {
+  ActivityUpdate,
+  IActivityRequest,
+  IActivitySchedule,
+} from "../interfaces/activities";
 import { INameNumber, INameOnly } from "../interfaces/generic";
 
 import createActivityService from "../services/activities/createActivity.service";
@@ -14,12 +18,14 @@ import deleteDayService from "../services/activities/deleteDay.service";
 import listAllActivitiesService from "../services/activities/listAllActivities.service";
 import listCategoriesService from "../services/activities/listCategories.service";
 import listUserActivitiesService from "../services/activities/listUserActivities.service";
-import listActivitiesService from "../services/activities/listUserActivities.service";
+import updateActivityService from "../services/activities/updateActivity.service";
+import updateActivityScheduleService from "../services/activities/updateActivitySchedule.service";
 
 export const createActivityController = async (req: Request, res: Response) => {
   const activityData: IActivityRequest = req.body;
+  const profile_id = req.user.profile_id;
 
-  const activity = await createActivityService({ ...activityData });
+  const activity = await createActivityService(profile_id, { ...activityData });
 
   return res.status(201).json(activity);
 };
@@ -66,7 +72,7 @@ export const listAllActivitiesController = async (
 ) => {
   const activities = await listAllActivitiesService();
 
-  return activities;
+  return res.json(activities);
 };
 
 export const listUserActivitiesController = async (
@@ -77,13 +83,36 @@ export const listUserActivitiesController = async (
 
   const activities = await listUserActivitiesService(profile_id);
 
-  return activities;
+  return res.json(activities);
 };
 
 export const listCategoriesController = async (req: Request, res: Response) => {
   const categories = await listCategoriesService();
 
-  return categories;
+  return res.json(categories);
+};
+
+export const updateActivityController = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const updateData: ActivityUpdate = req.body;
+
+  const updated = await updateActivityService(id, { ...updateData });
+
+  return res.json(updated);
+};
+
+export const updateActivityScheduelController = async (
+  req: Request,
+  res: Response
+) => {
+  const { id } = req.params;
+
+  const updateData: IActivitySchedule = req.body;
+
+  const updated = await updateActivityScheduleService(id, { ...updateData });
+
+  return res.json(updated);
 };
 
 export const deleteActivityController = async (req: Request, res: Response) => {

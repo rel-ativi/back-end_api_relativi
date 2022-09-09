@@ -20,3 +20,5 @@ export interface IActivityRequest {
 }
 
 export type IActivitySchema = Omit<IActivityRequest, "image">;
+
+export type ActivityUpdate = Omit<IActivityRequest, "address" | "image">;

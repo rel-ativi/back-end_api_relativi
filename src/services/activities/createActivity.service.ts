@@ -4,33 +4,43 @@ import { Activity } from "../../entities/activities.entity";
 import { ActivitySchedule } from "../../entities/activity_schedule.entity";
 import { Address } from "../../entities/addresses.entity";
 import { Category } from "../../entities/categories.entity";
+import { Profile } from "../../entities/profiles.entity";
 import { AppError } from "../../errors/AppError";
 import { IActivityRequest } from "../../interfaces/activities";
 
-const createActivityService = async ({
-  name,
-  price,
-  min_users,
-  max_users,
-  duration,
-  category_id,
-  address,
-  recurrent,
-  activity_schedule_id,
-  starting_date,
-  image,
-}: IActivityRequest): Promise<Activity> => {
+const createActivityService = async (
+  profile_id: string,
+  {
+    name,
+    price,
+    min_users,
+    max_users,
+    duration,
+    category_id,
+    address,
+    recurrent,
+    activity_schedule_id,
+    starting_date,
+  }: IActivityRequest
+): Promise<Activity> => {
   const activityRepo = AppDataSource.getRepository(Activity);
   const categoryRepo = AppDataSource.getRepository(Category);
   const addressRepo = AppDataSource.getRepository(Address);
+  const profileRepo = AppDataSource.getRepository(Profile);
   const activityScheduleRepo = AppDataSource.getRepository(ActivitySchedule);
 
   const category = await categoryRepo.findOne({
     where: { id: category_id },
   });
+  const profile = await profileRepo.findOne({
+    where: { id: profile_id },
+  });
 
   if (!category) {
     throw new AppError("Category not found", 404);
+  }
+  if (!profile) {
+    throw new AppError("Profile not found", 404);
   }
 
   const addresses = await addressRepo.find();
@@ -64,6 +74,7 @@ const createActivityService = async ({
   activity.recurrent = recurrent;
   activity.starting_date = starting_date;
   activity.address = addressAlreadyExists || newAddress!;
+  activity.created_by = profile;
   if (min_users) activity.min_users = min_users;
   if (schedule) activity.activity_schedule = schedule;
 
