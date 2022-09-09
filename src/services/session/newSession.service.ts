@@ -34,6 +34,7 @@ const newSessionService = async ({
     {
       is_adm: user.is_adm,
       is_active: user.is_active,
+      profile_id: user.profile.id,
       is_pro_user: user.is_pro_user,
     },
     process.env.SECRET_KEY as string,

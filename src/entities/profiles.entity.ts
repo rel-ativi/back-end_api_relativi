@@ -40,6 +40,11 @@ export class Profile {
   @JoinColumn()
   payment_info_id: PaymentInfo;
 
+  @OneToMany(() => Activity, (activities) => activities.created_by, {
+    eager: true,
+  })
+  activities: Activity[];
+
   @OneToMany(() => Certification, (certifications) => certifications.profile, {
     eager: true,
   })

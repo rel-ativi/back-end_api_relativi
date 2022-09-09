@@ -5,9 +5,13 @@ import {
   createActivityScheduleController,
   createCategoryController,
   createDayController,
+  deleteActivityController,
   deleteActivityScheduleController,
   deleteCategoryController,
   deleteDayController,
+  listAllActivitiesController,
+  listCategoriesController,
+  listUserActivitiesController,
 } from "../controllers/activity.controllers";
 import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
@@ -53,14 +57,20 @@ export const activityRoutes = () => {
   routes.get(
     "",
     authStatusMiddleware,
-    proUserStatusMiddleware
-    // read (list all activities from that user) controller
+    proUserStatusMiddleware,
+    listUserActivitiesController
   );
   routes.get(
-    "/:id/schedule", // activity id
+    "/all",
     authStatusMiddleware,
-    proUserStatusMiddleware
-    // read (list schedule from that activity) controller
+    admStatusMiddleware,
+    listAllActivitiesController
+  );
+  routes.get(
+    "/categories", // activity id
+    authStatusMiddleware,
+    proUserStatusMiddleware,
+    listCategoriesController
   );
   routes.patch(
     "/:id", // activity id
@@ -69,7 +79,7 @@ export const activityRoutes = () => {
     // update activity controller
   );
   routes.patch(
-    ":id/schedule/", // activity id
+    ":id/schedules/", // activity id
     authStatusMiddleware,
     proUserStatusMiddleware
     // update activity_schedule controller
@@ -77,23 +87,23 @@ export const activityRoutes = () => {
   routes.delete(
     "/:id", // activity id
     authStatusMiddleware,
-    proUserStatusMiddleware
-    // delete activity controller
+    proUserStatusMiddleware,
+    deleteActivityController
   );
   routes.delete(
-    "/schedule/:id", // activity_schedule id
+    "/schedules/:id", // activity_schedule id
     authStatusMiddleware,
     proUserStatusMiddleware,
     deleteActivityScheduleController
   );
   routes.delete(
-    "/day/:id",
+    "/days/:id",
     authStatusMiddleware,
     admStatusMiddleware,
     deleteDayController
   );
   routes.delete(
-    "/category/:id",
+    "/categorys/:id",
     authStatusMiddleware,
     admStatusMiddleware,
     deleteCategoryController

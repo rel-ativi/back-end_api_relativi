@@ -7,9 +7,14 @@ import createActivityService from "../services/activities/createActivity.service
 import createActivityScheduleService from "../services/activities/createActivitySchedule.service";
 import createCategoryService from "../services/activities/createCategory.service";
 import createDayService from "../services/activities/createDay.service";
+import deleteActivityService from "../services/activities/deleteActivity.service";
 import deleteActivityScheduleService from "../services/activities/deleteActivitySchedule.service";
 import deleteCategoryService from "../services/activities/deleteCategory.service";
 import deleteDayService from "../services/activities/deleteDay.service";
+import listAllActivitiesService from "../services/activities/listAllActivities.service";
+import listCategoriesService from "../services/activities/listCategories.service";
+import listUserActivitiesService from "../services/activities/listUserActivities.service";
+import listActivitiesService from "../services/activities/listUserActivities.service";
 
 export const createActivityController = async (req: Request, res: Response) => {
   const activityData: IActivityRequest = req.body;
@@ -53,6 +58,40 @@ export const createCategoryController = async (req: Request, res: Response) => {
   if (category) {
     return res.status(201).json({ message: "Category created" });
   }
+};
+
+export const listAllActivitiesController = async (
+  req: Request,
+  res: Response
+) => {
+  const activities = await listAllActivitiesService();
+
+  return activities;
+};
+
+export const listUserActivitiesController = async (
+  req: Request,
+  res: Response
+) => {
+  const profile_id = req.user.profile_id;
+
+  const activities = await listUserActivitiesService(profile_id);
+
+  return activities;
+};
+
+export const listCategoriesController = async (req: Request, res: Response) => {
+  const categories = await listCategoriesService();
+
+  return categories;
+};
+
+export const deleteActivityController = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  await deleteActivityService(id);
+
+  return res.status(204).send();
 };
 
 export const deleteActivityScheduleController = async (
