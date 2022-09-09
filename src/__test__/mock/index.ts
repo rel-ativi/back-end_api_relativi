@@ -1,4 +1,4 @@
-import { IProfile } from "../../interfaces/profiles"
+import { IProfile, IUserScheduleRequest } from "../../interfaces/profiles"
 import { IUserRequest } from "../../interfaces/users"
 
 
@@ -45,7 +45,6 @@ export const updateProfile: IProfile = {
     phone: "99 99999-9999",
 }
 
-export const createSchedules = {
-
-    
+export const createSchedules: IUserScheduleRequest = {
+    date: new Date("2022/09/09")
 }

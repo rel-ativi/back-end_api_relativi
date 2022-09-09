@@ -36,11 +36,11 @@ describe("Update  a profile", () => {
 
             expect.objectContaining({
                 id: response.body.id,
-                bio: responseUpdate?.bio,
-                phone: responseUpdate?.phone,
-                address: response.body?.address,
-                bank_info: response.body?.bank_info,
-                payment_info_id: response.body?.payment_info_id,
+                bio: responseUpdate?.body.bio,
+                phone: responseUpdate?.body.phone,
+                address: responseUpdate.body?.address,
+                bank_info: responseUpdate.body?.bank_info,
+                payment_info_id: responseUpdate.body?.payment_info_id,
                 certifications: response.body?.certifications,
                 scheduled_activities: response.body?.scheduled_activities,
                 activity_history: response.body?.activity_history,
