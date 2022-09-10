@@ -2,6 +2,7 @@ import * as yup from "yup";
 import { SchemaOf } from "yup";
 
 import { IActivitySchedule, IActivitySchema } from "../interfaces/activities";
+import { addressSchema } from "./address.schema";
 
 export const activitySchema: SchemaOf<IActivitySchema> = yup.object().shape({
   name: yup.string().required(),
@@ -12,6 +13,8 @@ export const activitySchema: SchemaOf<IActivitySchema> = yup.object().shape({
   category_id: yup.string().required(),
   recurrent: yup.boolean().required(),
   starting_date: yup.string().required(),
+  address: addressSchema,
+  activity_schedule_id: yup.string(),
 });
 
 export const activityScheduleSchema: SchemaOf<IActivitySchedule> = yup

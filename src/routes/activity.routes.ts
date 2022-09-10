@@ -1,10 +1,29 @@
 import { Router } from "express";
 
+import {
+  createActivityController,
+  createActivityScheduleController,
+  createCategoryController,
+  createDayController,
+  deleteActivityController,
+  deleteActivityScheduleController,
+  deleteCategoryController,
+  deleteDayController,
+  listAllActivitiesController,
+  listCategoriesController,
+  listUserActivitiesController,
+  updateActivityController,
+  updateActivityScheduelController,
+} from "../controllers/activity.controllers";
 import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
 import { proUserStatusMiddleware } from "../middlewares/proUserStatus.middleware";
 import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
-import { activitySchema } from "../schemas/activities.schema";
+import {
+  activityScheduleSchema,
+  activitySchema,
+} from "../schemas/activities.schema";
+import { nameNumberSchema, nameOnlySchema } from "../schemas/generic.schema";
 
 const routes = Router();
 
@@ -13,53 +32,83 @@ export const activityRoutes = () => {
     "",
     authStatusMiddleware,
     proUserStatusMiddleware,
-    schemaValidationMiddleware(activitySchema)
-    // schema validation middleware
-    // create controller
+    schemaValidationMiddleware(activitySchema),
+    createActivityController
+  );
+  routes.post(
+    "/:id/schedule", // activity id
+    authStatusMiddleware,
+    proUserStatusMiddleware,
+    schemaValidationMiddleware(activityScheduleSchema),
+    createActivityScheduleController
   );
   routes.post(
     "/day",
     authStatusMiddleware,
-    admStatusMiddleware
-    // schema validation middleware
-    // create day controller
+    admStatusMiddleware,
+    schemaValidationMiddleware(nameNumberSchema),
+    createDayController
   );
   routes.post(
     "/category",
     authStatusMiddleware,
-    admStatusMiddleware
-    // schema validation middleware
-    // create category controller
+    admStatusMiddleware,
+    schemaValidationMiddleware(nameOnlySchema),
+    createCategoryController
   );
   routes.get(
     "",
     authStatusMiddleware,
-    proUserStatusMiddleware
-    // read (list all activities from that user) controller
+    proUserStatusMiddleware,
+    listUserActivitiesController
+  );
+  routes.get(
+    "/all",
+    authStatusMiddleware,
+    admStatusMiddleware,
+    listAllActivitiesController
+  );
+  routes.get(
+    "/categories", // activity id
+    authStatusMiddleware,
+    proUserStatusMiddleware,
+    listCategoriesController
   );
   routes.patch(
-    "/:id",
+    "/:id", // activity id
     authStatusMiddleware,
-    proUserStatusMiddleware
-    // update controller
+    proUserStatusMiddleware,
+    updateActivityController
+  );
+  routes.patch(
+    ":id/schedules/", // activity id
+    authStatusMiddleware,
+    proUserStatusMiddleware,
+    updateActivityScheduelController
   );
   routes.delete(
-    "",
+    "/:id", // activity id
     authStatusMiddleware,
-    proUserStatusMiddleware
-    // delete controller
+    proUserStatusMiddleware,
+    deleteActivityController
   );
   routes.delete(
-    "/day/:id",
+    "/schedules/:id", // activity_schedule id
     authStatusMiddleware,
-    admStatusMiddleware
-    // delete day controller
+    proUserStatusMiddleware,
+    deleteActivityScheduleController
   );
   routes.delete(
-    "/category/:id",
+    "/days/:id",
     authStatusMiddleware,
-    admStatusMiddleware
-    // delete category controller
+    admStatusMiddleware,
+    deleteDayController
+  );
+  routes.delete(
+    "/categorys/:id",
+    authStatusMiddleware,
+    admStatusMiddleware,
+    deleteCategoryController
   );
 
   return routes;
