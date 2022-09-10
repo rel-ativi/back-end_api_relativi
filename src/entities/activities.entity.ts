@@ -13,6 +13,7 @@ import {
 import { ActivitySchedule } from "./activity_schedule.entity";
 import { Address } from "./addresses.entity";
 import { Category } from "./categories.entity";
+import { Profile } from "./profiles.entity";
 import { ActivityHistory } from "./user_activity_history.entity";
 import { UserSchedule } from "./user_schedule.entity";
 
@@ -46,10 +47,13 @@ export class Activity {
   starting_date: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
+
+  @ManyToOne(() => Profile)
+  created_by: Profile;
 
   @ManyToOne(() => Category, { eager: true })
   category: Category;
