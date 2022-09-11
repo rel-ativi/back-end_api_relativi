@@ -69,7 +69,7 @@ export const activityRoutes = () => {
     listAllActivitiesController
   );
   routes.get(
-    "/categories", // activity id
+    "/categories",
     authStatusMiddleware,
     proUserStatusMiddleware,
     listCategoriesController
@@ -81,7 +81,7 @@ export const activityRoutes = () => {
     updateActivityController
   );
   routes.patch(
-    ":id/schedules/", // activity id
+    ":id/schedule/", // activity id
     authStatusMiddleware,
     proUserStatusMiddleware,
     updateActivityScheduelController
@@ -105,7 +105,7 @@ export const activityRoutes = () => {
     deleteDayController
   );
   routes.delete(
-    "/categorys/:id",
+    "/categories/:id",
     authStatusMiddleware,
     admStatusMiddleware,
     deleteCategoryController
