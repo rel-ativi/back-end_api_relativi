@@ -1,3 +1,4 @@
+import { IBankInfo } from "../../interfaces/bank_info"
 import { IProfile, IUserScheduleRequest } from "../../interfaces/profiles"
 import { IUserRequest } from "../../interfaces/users"
 
@@ -7,7 +8,7 @@ export const userCreate: IUserRequest = {
     email: "example@org.com.br",
     password: "*)#Ygafbius241",
     is_adm: true,
-    is_pro_user: false
+    is_pro_user: true
 }
 export const userCreateNotAdm: IUserRequest = {
     name: "example",
@@ -47,4 +48,16 @@ export const updateProfile: IProfile = {
 
 export const createSchedules: IUserScheduleRequest = {
     date: new Date("2022/09/09")
+}
+
+export const createBank: IBankInfo = {
+    bank: "Nu Bank",
+    agency: "0000-1",
+    account_number: "3798649287"
+}
+
+export const updateBank: IBankInfo = {
+    bank: "Inter",
+    agency: "9999-1",
+    account_number: "338204738"
 }
