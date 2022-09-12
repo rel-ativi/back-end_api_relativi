@@ -22,10 +22,10 @@ export class Profile {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ length: 512 })
+  @Column({ length: 512, nullable: true })
   bio: string;
 
-  @Column({ length: 24 })
+  @Column({ length: 24, nullable: true })
   phone: string;
 
   @OneToOne(() => Address, (address) => address.address_of, {
