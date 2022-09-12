@@ -1,12 +1,13 @@
 import { Router } from "express";
 
+import {
+  createPaymentController,
+  deletePaymentController,
+  updatePaymentController,
+} from "../controllers/payment.controllers";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
 import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
 import { paymentInfoSchema } from "../schemas/paymentInfo.schema";
-
-import { createPaymentController } from "../controllers/payment.controllers";
-import { updatePaymentController } from "../controllers/payment.controllers";
-import { deletePaymentController } from "../controllers/payment.controllers";
 
 const routes = Router();
 

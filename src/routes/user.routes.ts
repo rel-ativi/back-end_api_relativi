@@ -1,11 +1,11 @@
 import { Router } from "express";
+
 import {
   createUserController,
   deleteUserController,
   listUserController,
   listUsersController,
 } from "../controllers/user.controllers";
-
 import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
 import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";

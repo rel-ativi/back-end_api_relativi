@@ -4,10 +4,11 @@ import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
 import { proUserStatusMiddleware } from "../middlewares/proUserStatus.middleware";
 import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
 import { bankInfoSchema } from "../schemas/bankInfo.schema";
-
-import { createBankController } from "../controllers/bank.controller";
-import { updateBankController } from "../controllers/bank.controller";
-import { deleteBankController } from "../controllers/bank.controller";
+import {
+  createBankController,
+  deleteBankController,
+  updateBankController,
+} from "../controllers/bank.controller";
 
 const routes = Router();
 
