@@ -1,9 +1,13 @@
+import { Profile } from "../../entities/profiles.entity";
+
 export interface IUserRequest {
   name: string;
   email: string;
   password: string;
   is_adm?: boolean;
   is_pro_user?: boolean;
+  bio?: string;
+  phone?: string;
 }
 
 export interface IUserLogin {
@@ -17,6 +21,12 @@ export interface IUserResponse {
   password?: string;
   is_adm?: boolean;
   is_pro_user?: boolean;
+}
+
+export interface IUserCompleteResponse extends IUserResponse {
+  createdAt: Date;
+  updatedAt: Date;
+  profile: Profile | null;
 }
 
 export interface ISimpleResponse {
