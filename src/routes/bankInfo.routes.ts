@@ -27,8 +27,9 @@ export const bankInfoRoutes = () => {
   );
   routes.delete(
     "",
-    // authStatusMiddleware
-    // delete controller
+
+    authStatusMiddleware,
+    proUserStatusMiddleware,
     deleteBankController
   );
 
