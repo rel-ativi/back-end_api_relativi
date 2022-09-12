@@ -28,17 +28,25 @@ export class Profile {
   @Column({ length: 24 })
   phone: string;
 
-  @OneToOne(() => Address, (address) => address.address_of, { eager: true })
+  @OneToOne(() => Address, (address) => address.address_of, {
+    eager: true,
+    nullable: true,
+  })
   @JoinColumn()
   address: Address;
 
-  @OneToOne(() => BankInfo, { eager: true })
+  @OneToOne(() => BankInfo, { eager: true, nullable: true })
   @JoinColumn()
   bank_info: BankInfo;
 
-  @OneToOne(() => PaymentInfo, { eager: true })
+  @OneToOne(() => PaymentInfo, { eager: true, nullable: true })
   @JoinColumn()
   payment_info_id: PaymentInfo;
+
+  @OneToMany(() => Activity, (activities) => activities.created_by, {
+    eager: true,
+  })
+  activities: Activity[];
 
   @OneToMany(() => Certification, (certifications) => certifications.profile, {
     eager: true,

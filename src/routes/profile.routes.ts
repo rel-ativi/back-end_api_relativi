@@ -8,6 +8,7 @@ const routes = Router();
 
 export const profileRoutes = () => {
   routes.post(
+    // internal use
     "",
     authStatusMiddleware,
     schemaValidationMiddleware(profileSchema)

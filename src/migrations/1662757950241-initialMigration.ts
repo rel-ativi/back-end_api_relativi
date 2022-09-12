@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class initialMigration1662468753557 implements MigrationInterface {
-    name = 'initialMigration1662468753557'
+export class initialMigration1662757950241 implements MigrationInterface {
+    name = 'initialMigration1662757950241'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "days" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying(16) NOT NULL, "number" integer NOT NULL, CONSTRAINT "PK_c2c66eb46534bea34ba48cc4d7f" PRIMARY KEY ("id"))`);
@@ -18,7 +18,7 @@ export class initialMigration1662468753557 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE "states" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying(32) NOT NULL, CONSTRAINT "UQ_fe52f02449eaf27be2b2cb7acda" UNIQUE ("name"), CONSTRAINT "PK_09ab30ca0975c02656483265f4f" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "addresses" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "street" character varying(64) NOT NULL, "number" character varying(16) NOT NULL, "zip_code" character varying(8) NOT NULL, "districtId" uuid, "cityId" uuid, "stateId" uuid, "countryId" uuid, CONSTRAINT "PK_745d8f43d3af10ab8247465e450" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "categories" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying(60) NOT NULL, CONSTRAINT "UQ_8b0be371d28245da6e4f4b61878" UNIQUE ("name"), CONSTRAINT "PK_24dbc6126a28ff948da33e97d3b" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "activities" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying(128) NOT NULL, "price" numeric(8,2) NOT NULL, "min_users" integer NOT NULL DEFAULT '1', "max_users" integer NOT NULL, "duration" numeric(2,2) NOT NULL, "is_active" boolean NOT NULL DEFAULT true, "recurrent" boolean NOT NULL DEFAULT false, "starting_date" date NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "categoryId" uuid, "addressId" uuid, "activityScheduleId" uuid, CONSTRAINT "REL_5803aa050358a4d5619c270a09" UNIQUE ("addressId"), CONSTRAINT "REL_0e2bc0e1180cce4963c1274c18" UNIQUE ("activityScheduleId"), CONSTRAINT "PK_7f4004429f731ffb9c88eb486a8" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "activities" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying(128) NOT NULL, "price" numeric(8,2) NOT NULL, "min_users" integer NOT NULL DEFAULT '1', "max_users" integer NOT NULL, "duration" numeric(2,2) NOT NULL, "is_active" boolean NOT NULL DEFAULT true, "recurrent" boolean NOT NULL DEFAULT false, "starting_date" date NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "createdById" uuid, "categoryId" uuid, "addressId" uuid, "activityScheduleId" uuid, CONSTRAINT "REL_5803aa050358a4d5619c270a09" UNIQUE ("addressId"), CONSTRAINT "REL_0e2bc0e1180cce4963c1274c18" UNIQUE ("activityScheduleId"), CONSTRAINT "PK_7f4004429f731ffb9c88eb486a8" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "users" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying(128) NOT NULL, "email" character varying(48) NOT NULL, "password" character varying(128) NOT NULL, "is_active" boolean NOT NULL DEFAULT true, "is_adm" boolean NOT NULL DEFAULT false, "is_pro_user" boolean NOT NULL DEFAULT false, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "profileId" uuid, CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "REL_b1bda35cdb9a2c1b777f5541d8" UNIQUE ("profileId"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "activity_schedule_days_days" ("activityScheduleId" uuid NOT NULL, "daysId" uuid NOT NULL, CONSTRAINT "PK_2d9af713178f771fd69ac7bce0a" PRIMARY KEY ("activityScheduleId", "daysId"))`);
         await queryRunner.query(`CREATE INDEX "IDX_6b7582efdd2448807a367e4711" ON "activity_schedule_days_days" ("activityScheduleId") `);
@@ -38,6 +38,7 @@ export class initialMigration1662468753557 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "addresses" ADD CONSTRAINT "FK_221420cb636d4e9e48aeca528a0" FOREIGN KEY ("cityId") REFERENCES "cities"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "addresses" ADD CONSTRAINT "FK_debce902ec6af918010a7b04264" FOREIGN KEY ("stateId") REFERENCES "states"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "addresses" ADD CONSTRAINT "FK_589483c676701aa3bbb2695daf2" FOREIGN KEY ("countryId") REFERENCES "countries"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "activities" ADD CONSTRAINT "FK_579056df0c92b0f6432e96b2048" FOREIGN KEY ("createdById") REFERENCES "profiles"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "activities" ADD CONSTRAINT "FK_da47c633d8bb7ee8ca9009788d4" FOREIGN KEY ("categoryId") REFERENCES "categories"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "activities" ADD CONSTRAINT "FK_5803aa050358a4d5619c270a093" FOREIGN KEY ("addressId") REFERENCES "addresses"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "activities" ADD CONSTRAINT "FK_0e2bc0e1180cce4963c1274c180" FOREIGN KEY ("activityScheduleId") REFERENCES "activity_schedule"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
@@ -57,6 +58,7 @@ export class initialMigration1662468753557 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "activities" DROP CONSTRAINT "FK_0e2bc0e1180cce4963c1274c180"`);
         await queryRunner.query(`ALTER TABLE "activities" DROP CONSTRAINT "FK_5803aa050358a4d5619c270a093"`);
         await queryRunner.query(`ALTER TABLE "activities" DROP CONSTRAINT "FK_da47c633d8bb7ee8ca9009788d4"`);
+        await queryRunner.query(`ALTER TABLE "activities" DROP CONSTRAINT "FK_579056df0c92b0f6432e96b2048"`);
         await queryRunner.query(`ALTER TABLE "addresses" DROP CONSTRAINT "FK_589483c676701aa3bbb2695daf2"`);
         await queryRunner.query(`ALTER TABLE "addresses" DROP CONSTRAINT "FK_debce902ec6af918010a7b04264"`);
         await queryRunner.query(`ALTER TABLE "addresses" DROP CONSTRAINT "FK_221420cb636d4e9e48aeca528a0"`);
