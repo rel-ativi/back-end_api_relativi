@@ -5,7 +5,7 @@ import { DataSource } from "typeorm"
 import { admLogin, createProfile, updateProfile, userCreate } from "../mock"
 
 
-describe("Update  a profile", () => {
+describe("Update a profile", () => {
 
     let connection: DataSource
 
@@ -18,7 +18,7 @@ describe("Update  a profile", () => {
 
     afterAll(async () => connection.destroy())
 
-    test("", async () => {
+    test("Trying to update profile", async () => {
 
         await request(app).post("/users").send(userCreate)
 

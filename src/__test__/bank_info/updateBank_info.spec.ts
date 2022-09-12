@@ -5,7 +5,7 @@ import app from "../../app"
 import { admLogin, createBank, notAdmLogin, updateBank, userCreate, userCreateNotAdm } from "../mock"
 
 
-describe("Delete a bank_info", () => {
+describe("Update a bank_info", () => {
 
     let connection: DataSource
 
@@ -18,7 +18,7 @@ describe("Delete a bank_info", () => {
 
     afterAll(async () => await connection.destroy())
 
-    test("Trying to delete a bank_info", async () => {
+    test("Trying to update a bank_info", async () => {
 
         await request(app).post("/users").send(userCreate)
         
@@ -42,7 +42,7 @@ describe("Delete a bank_info", () => {
         )
     })
     
-    test("Should not be able to delete bank_info without authentication", async () => {
+    test("Should not be able to update bank_info without authentication", async () => {
 
         const bank_info = await request(app).post("/bank_info").send(createBank)
 
@@ -52,7 +52,7 @@ describe("Delete a bank_info", () => {
         expect(response.body).toHaveProperty("message")
     })
 
-    test("Should not be able to delete bank_info not being pro_user", async () => {
+    test("Should not be able to update bank_info not being pro_user", async () => {
 
         await request(app).post("/users").send(userCreateNotAdm)
 
