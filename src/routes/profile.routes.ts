@@ -15,18 +15,22 @@ export const profileRoutes = () => {
     // create controller
   );
   routes.post(
-    "/favorite/:id", //activity id
+    "/favorites/:id", //activity id
     authStatusMiddleware
     // add/remove activity to favorites controller
   );
   routes.post(
-    "/schedule/:id", //activity id
+    "/schedules/:id", //activity id
     authStatusMiddleware,
     schemaValidationMiddleware(userScheduleSchema)
     // schedule activity controller
   );
   routes.get(
-    "/schedule",
+    "/favorites",
+    authStatusMiddleware
+  )
+  routes.get(
+    "/schedules",
     authStatusMiddleware
     // list user schedule controller
   );
@@ -41,7 +45,7 @@ export const profileRoutes = () => {
     // update controller (only bio and phone)
   );
   routes.delete(
-    "/schedule/:id", //activity id
+    "/schedules/:id", //activity id
     authStatusMiddleware
     // delete activity_schedule controller
   );
