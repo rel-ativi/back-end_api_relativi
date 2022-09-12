@@ -1,4 +1,5 @@
 import { IBankInfo } from "../../interfaces/bank_info"
+import { IPaymentInfo } from "../../interfaces/payment_info"
 import { IProfile, IUserScheduleRequest } from "../../interfaces/profiles"
 import { IUserRequest } from "../../interfaces/users"
 
@@ -60,4 +61,11 @@ export const updateBank: IBankInfo = {
     bank: "Inter",
     agency: "9999-1",
     account_number: "338204738"
+}
+
+export const createPayment: IPaymentInfo = {
+    card: "carro",
+    card_name: "BMW",
+    due_date: "20/12/2022",
+    sec_code: 12
 }
