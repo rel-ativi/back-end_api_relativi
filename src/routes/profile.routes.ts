@@ -1,5 +1,8 @@
 import { Router } from "express";
 
+import { createScheduleController } from "../controllers/schedule.controllers";
+import { listScheduleController } from "../controllers/schedule.controllers";
+import { deleteScheduleController } from "../controllers/schedule.controllers";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
 import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
 import { profileSchema, userScheduleSchema } from "../schemas/profile.schema";
@@ -22,18 +25,11 @@ export const profileRoutes = () => {
   routes.post(
     "/schedules/:id", //activity id
     authStatusMiddleware,
-    schemaValidationMiddleware(userScheduleSchema)
-    // schedule activity controller
+    schemaValidationMiddleware(userScheduleSchema),
+    createScheduleController
   );
-  routes.get(
-    "/favorites",
-    authStatusMiddleware
-  )
-  routes.get(
-    "/schedules",
-    authStatusMiddleware
-    // list user schedule controller
-  );
+  routes.get("/favorites", authStatusMiddleware);
+  routes.get("/schedules", authStatusMiddleware, listScheduleController);
   routes.get(
     "/history",
     authStatusMiddleware
@@ -46,8 +42,8 @@ export const profileRoutes = () => {
   );
   routes.delete(
     "/schedules/:id", //activity id
-    authStatusMiddleware
-    // delete activity_schedule controller
+    authStatusMiddleware,
+    deleteScheduleController
   );
   return routes;
 };
