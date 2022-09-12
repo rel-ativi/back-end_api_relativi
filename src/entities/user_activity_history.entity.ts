@@ -17,6 +17,6 @@ export class ActivityHistory {
   @ManyToOne(() => Activity)
   activity: Activity;
 
-  @ManyToOne(() => Profile, { eager: true })
+  @ManyToOne(() => Profile)
   profile: Profile;
 }

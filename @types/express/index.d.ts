@@ -7,6 +7,7 @@ declare global {
         is_adm: boolean;
         is_active: boolean;
         is_pro_user: boolean;
+        profile_id: string;
         id: string;
       };
     }
