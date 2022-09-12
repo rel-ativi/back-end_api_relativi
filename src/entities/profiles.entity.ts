@@ -45,6 +45,7 @@ export class Profile {
 
   @OneToMany(() => Activity, (activities) => activities.created_by, {
     eager: true,
+    nullable: true,
   })
   activities: Activity[];
 
