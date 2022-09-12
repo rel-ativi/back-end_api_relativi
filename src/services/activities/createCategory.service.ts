@@ -4,7 +4,9 @@ import { Category } from "../../entities/categories.entity";
 import { AppError } from "../../errors/AppError";
 import { INameOnly } from "../../interfaces/generic";
 
-const createCategoryService = async ({ name }: INameOnly): Promise<boolean> => {
+const createCategoryService = async ({
+  name,
+}: INameOnly): Promise<Category> => {
   const categoryRepo = AppDataSource.getRepository(Category);
 
   const categories = await categoryRepo.find();
@@ -21,7 +23,7 @@ const createCategoryService = async ({ name }: INameOnly): Promise<boolean> => {
   categoryRepo.create(category);
   await categoryRepo.save(category);
 
-  return true;
+  return category;
 };
 
 export default createCategoryService;
