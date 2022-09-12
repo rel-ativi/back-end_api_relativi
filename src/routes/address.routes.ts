@@ -16,7 +16,7 @@ export const addressRoutes = () => {
     // create controller
   );
   routes.post(
-    "/districst",
+    "/districts",
     authStatusMiddleware,
     admStatusMiddleware,
     schemaValidationMiddleware(nameOnlySchema)

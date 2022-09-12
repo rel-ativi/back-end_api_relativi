@@ -14,20 +14,19 @@ const routes = Router();
 export const bankInfoRoutes = () => {
   routes.post(
     "",
-    // authStatusMiddleware,
-    // proUserStatusMiddleware,
+    authStatusMiddleware,
+    proUserStatusMiddleware,
     schemaValidationMiddleware(bankInfoSchema),
     createBankController
   );
   routes.patch(
     "",
-    // authStatusMiddleware,
-    // proUserStatusMiddleware
+    authStatusMiddleware,
+    proUserStatusMiddleware,
     updateBankController
   );
   routes.delete(
     "",
-
     authStatusMiddleware,
     proUserStatusMiddleware,
     deleteBankController
