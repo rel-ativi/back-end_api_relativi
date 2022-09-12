@@ -7,7 +7,7 @@ import { INameNumber } from "../../interfaces/generic";
 const createDayService = async ({
   name,
   number,
-}: INameNumber): Promise<boolean> => {
+}: INameNumber): Promise<Day> => {
   const daysrRepo = AppDataSource.getRepository(Day);
 
   const allDays = await daysrRepo.find();
@@ -31,7 +31,7 @@ const createDayService = async ({
   daysrRepo.create(day);
   await daysrRepo.save(day);
 
-  return true;
+  return day;
 };
 
 export default createDayService;
