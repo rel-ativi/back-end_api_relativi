@@ -11,6 +11,7 @@ import {
   deleteDayController,
   listAllActivitiesController,
   listCategoriesController,
+  listDaysController,
   listUserActivitiesController,
   updateActivityController,
   updateActivityScheduelController,
@@ -67,6 +68,12 @@ export const activityRoutes = () => {
     authStatusMiddleware,
     admStatusMiddleware,
     listAllActivitiesController
+  );
+  routes.get(
+    "/days",
+    authStatusMiddleware,
+    proUserStatusMiddleware,
+    listDaysController
   );
   routes.get(
     "/categories",

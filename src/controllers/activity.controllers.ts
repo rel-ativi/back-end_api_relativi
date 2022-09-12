@@ -17,6 +17,7 @@ import deleteCategoryService from "../services/activities/deleteCategory.service
 import deleteDayService from "../services/activities/deleteDay.service";
 import listAllActivitiesService from "../services/activities/listAllActivities.service";
 import listCategoriesService from "../services/activities/listCategories.service";
+import listDaysService from "../services/activities/listDays.service";
 import listUserActivitiesService from "../services/activities/listUserActivities.service";
 import updateActivityService from "../services/activities/updateActivity.service";
 import updateActivityScheduleService from "../services/activities/updateActivitySchedule.service";
@@ -51,9 +52,7 @@ export const createDayController = async (req: Request, res: Response) => {
 
   const day = await createDayService({ ...dayData });
 
-  if (day) {
-    return res.status(201).json({ message: "Day created" });
-  }
+  return res.status(201).json(day);
 };
 
 export const createCategoryController = async (req: Request, res: Response) => {
@@ -61,9 +60,7 @@ export const createCategoryController = async (req: Request, res: Response) => {
 
   const category = await createCategoryService({ ...categoryData });
 
-  if (category) {
-    return res.status(201).json({ message: "Category created" });
-  }
+  return res.status(201).json(category);
 };
 
 export const listAllActivitiesController = async (
@@ -84,6 +81,12 @@ export const listUserActivitiesController = async (
   const activities = await listUserActivitiesService(profile_id);
 
   return res.json(activities);
+};
+
+export const listDaysController = async (req: Request, res: Response) => {
+  const days = await listDaysService();
+
+  return res.json(days);
 };
 
 export const listCategoriesController = async (req: Request, res: Response) => {
