@@ -6,8 +6,6 @@ export interface IUserRequest {
   password: string;
   is_adm?: boolean;
   is_pro_user?: boolean;
-  bio?: string;
-  phone?: string;
 }
 
 export interface IUserLogin {

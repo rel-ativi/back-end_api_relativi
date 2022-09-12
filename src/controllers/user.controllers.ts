@@ -6,23 +6,13 @@ import listUserService from "../services/users/listUser.service";
 import listUsersService from "../services/users/listUsers.service";
 
 const createUserController = async (req: Request, res: Response) => {
-  const {
-    email,
-    is_adm,
-    name,
-    password,
-    is_pro_user,
-    bio,
-    phone,
-  }: IUserRequest = req.body;
+  const { email, is_adm, name, password, is_pro_user }: IUserRequest = req.body;
   const user = await createUserService({
     email,
     is_adm,
     name,
     password,
     is_pro_user,
-    bio,
-    phone,
   });
   return res.status(201).json(user);
 };

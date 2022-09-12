@@ -11,8 +11,6 @@ const createUserService = async ({
   name,
   password,
   is_pro_user,
-  bio,
-  phone,
 }: IUserRequest): Promise<IUserResponse> => {
   const userRepository = AppDataSource.getRepository(User);
   const profileRepository = AppDataSource.getRepository(Profile);
@@ -25,14 +23,7 @@ const createUserService = async ({
     throw new AppError("Bad request", 400);
   }
 
-  if (phone && (phone.length > 11 || phone.length < 11)) {
-    throw new AppError("Invalid phone number");
-  }
-
-  const profile = profileRepository.create({
-    bio,
-    phone,
-  });
+  const profile = profileRepository.create({});
 
   await profileRepository.save(profile);
 

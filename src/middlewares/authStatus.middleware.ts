@@ -34,6 +34,7 @@ export const authStatusMiddleware = async (
         is_adm: decoded.is_adm,
         is_active: decoded.is_active,
         is_pro_user: decoded.is_pro_user,
+        profile_id: decoded.profile_id,
       };
 
       next();
