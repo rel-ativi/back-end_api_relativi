@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { AppError } from "../../errors/AppError";
-import { handleErrorMiddleware } from "../../middlewares/handleError.middleware";
+
+import profilesAddFavoritesService from "../../services/profiles/profilesAddFavorites.service";
+import profilesListFavoritesService from "../../services/profiles/profilesListFavorites.service";
 import profilesUpdateService from "../../services/profiles/profilesUpdate.service";
 
 export const profilesUpdateController = async (req: Request, res: Response) => {
@@ -10,10 +11,25 @@ export const profilesUpdateController = async (req: Request, res: Response) => {
   return res.status(201).json(update);
 };
 
-export const profilesAddFavoritesController = async (req: Request, res: Response) => {
+export const profilesAddFavoritesController = async (
+  req: Request,
+  res: Response
+) => {
+  const { profile_id } = req.user;
+  const { id } = req.params;
 
-}
+  const favorite = profilesAddFavoritesService(profile_id, id);
 
-export const profilesListFavoritesController = async (req: Request, res: Response) => {
-  
-}
+  return res.status(201).json(favorite);
+};
+
+export const profilesListFavoritesController = async (
+  req: Request,
+  res: Response
+) => {
+  const { profile_id } = req.user;
+
+  const list = profilesListFavoritesService(profile_id);
+
+  return res.status(200).json(list);
+};

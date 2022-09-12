@@ -16,55 +16,51 @@ export const addressRoutes = () => {
     // create controller
   );
   routes.post(
-    "/district",
+    "/districst",
     authStatusMiddleware,
     admStatusMiddleware,
     schemaValidationMiddleware(nameOnlySchema)
     // create controller
   );
   routes.post(
-    "/city",
+    "/cities",
     authStatusMiddleware,
     admStatusMiddleware,
     schemaValidationMiddleware(nameOnlySchema)
     // create controller
   );
   routes.post(
-    "/state",
+    "/states",
     authStatusMiddleware,
     admStatusMiddleware,
     schemaValidationMiddleware(nameOnlySchema)
     // create controller
   );
   routes.post(
-    "/country",
+    "/countries",
     authStatusMiddleware,
     admStatusMiddleware,
     schemaValidationMiddleware(nameOnlySchema)
     // create controller
   );
   routes.get(
-    "/district",
-    authStatusMiddleware,
-    admStatusMiddleware
+    "/districts",
+    authStatusMiddleware
     // list all controller
   );
   routes.get(
-    "/city",
-    authStatusMiddleware,
-    admStatusMiddleware
+    "/cities",
+    authStatusMiddleware
     // list all controller
   );
   routes.get(
-    "/state",
-    authStatusMiddleware,
-    admStatusMiddleware
+    "/states",
+    authStatusMiddleware
     // list all controller
   );
   routes.get(
-    "/country",
-    authStatusMiddleware,
-    admStatusMiddleware
+    "/countries",
+    authStatusMiddleware
     // list all controller
   );
   routes.patch(
@@ -78,25 +74,25 @@ export const addressRoutes = () => {
     // delete controller
   );
   routes.delete(
-    "/district/:id",
+    "/districts/:id",
     authStatusMiddleware,
     admStatusMiddleware
     // delete controller
   );
   routes.delete(
-    "/city/:id",
+    "/cities/:id",
     authStatusMiddleware,
     admStatusMiddleware
     // delete controller
   );
   routes.delete(
-    "/state/:id",
+    "/states/:id",
     authStatusMiddleware,
     admStatusMiddleware
     // delete controller
   );
   routes.delete(
-    "/country/:id",
+    "/countries/:id",
     authStatusMiddleware,
     admStatusMiddleware
     // delete controller

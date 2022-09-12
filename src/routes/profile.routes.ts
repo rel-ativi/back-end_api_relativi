@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { profilesAddFavoritesController, profilesListFavoritesController, profilesUpdateController } from "../controllers/profiles/profiles.controllers";
 
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
 import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
@@ -8,15 +9,16 @@ const routes = Router();
 
 export const profileRoutes = () => {
   routes.post(
+    // internal use
     "",
     authStatusMiddleware,
     schemaValidationMiddleware(profileSchema)
     // create controller
   );
   routes.post(
-    "/favorites/:id", //activity id
-    authStatusMiddleware
-    // add/remove activity to favorites controller
+    "/favorites/:id", 
+    authStatusMiddleware,
+    profilesAddFavoritesController
   );
   routes.post(
     "/schedules/:id", //activity id
@@ -26,7 +28,8 @@ export const profileRoutes = () => {
   );
   routes.get(
     "/favorites",
-    authStatusMiddleware
+    authStatusMiddleware,
+    profilesListFavoritesController
   )
   routes.get(
     "/schedules",
@@ -40,8 +43,8 @@ export const profileRoutes = () => {
   );
   routes.patch(
     "",
-    authStatusMiddleware
-    // update controller (only bio and phone)
+    authStatusMiddleware,
+    profilesUpdateController
   );
   routes.delete(
     "/schedules/:id", //activity id
