@@ -17,6 +17,8 @@ export const authStatusMiddleware = async (
     });
   }
 
+  console.log("hi activity");
+
   token = token.split(" ")[1];
 
   jwt.verify(
