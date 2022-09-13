@@ -1,3 +1,4 @@
+import { hash } from "bcryptjs";
 import AppDataSource from "../../data-source";
 import { User } from "../../entities/users.entity";
 import { AppError } from "../../errors/AppError";
@@ -6,41 +7,32 @@ import { ISimpleResponse } from "../../interfaces/users";
 const updateUserService = async (
   name: string,
   email: string,
+  password: string,
   id: string
-): Promise<ISimpleResponse> => {
-  const userRepository = AppDataSource.getRepository(User);
-  const user = userRepository.findOneBy({
-    id,
-  });
+): Promise<User> => {
+  const usersRepo = AppDataSource.getRepository(User);
+  const users = await usersRepo.find();
+  const user = users.find((u) => u.id === id);
 
   if (!user) {
     throw new AppError("User not found", 404);
   }
 
-  const exists = await userRepository.findOneBy({
-    email,
+  if (!name && !email && !password) {
+    throw new AppError("Nothing to update", 400);
+  }
+
+  await usersRepo.update(id, {
+    name: name || user.name,
+    email: email || user.email,
+    password: !!password ? await hash(password, 10) : user.password,
   });
 
-  if ((!name && !email) || exists) {
-    throw new AppError("Bad request", 400);
-  }
+  const updated = await usersRepo.findOneBy({
+    id,
+  });
 
-  if (name) {
-    await userRepository.save({
-      id,
-      name,
-    });
-  }
-
-  if (email) {
-    await userRepository.save({
-      id,
-      email,
-    });
-  }
-
-  const response: ISimpleResponse = { message: "User update success" };
-  return response;
+  return updated!;
 };
 
 export default updateUserService;
