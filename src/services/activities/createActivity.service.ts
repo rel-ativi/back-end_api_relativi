@@ -4,7 +4,11 @@ import { Activity } from "../../entities/activities.entity";
 import { ActivitySchedule } from "../../entities/activity_schedule.entity";
 import { Address } from "../../entities/addresses.entity";
 import { Category } from "../../entities/categories.entity";
+import { City } from "../../entities/cities.entity";
+import { Country } from "../../entities/countries.entity";
+import { District } from "../../entities/districts.entity";
 import { Profile } from "../../entities/profiles.entity";
+import { State } from "../../entities/states.entity";
 import { AppError } from "../../errors/AppError";
 import { IActivityRequest } from "../../interfaces/activities";
 
@@ -26,6 +30,10 @@ const createActivityService = async (
   const activityRepo = AppDataSource.getRepository(Activity);
   const categoryRepo = AppDataSource.getRepository(Category);
   const addressRepo = AppDataSource.getRepository(Address);
+  const districtsRepo = AppDataSource.getRepository(District);
+  const citiesRepo = AppDataSource.getRepository(City);
+  const statesRepo = AppDataSource.getRepository(State);
+  const countriesRepo = AppDataSource.getRepository(Country);
   const profileRepo = AppDataSource.getRepository(Profile);
   const activityScheduleRepo = AppDataSource.getRepository(ActivitySchedule);
 
@@ -35,12 +43,36 @@ const createActivityService = async (
   const profile = await profileRepo.findOne({
     where: { id: profile_id },
   });
+  const district = await districtsRepo.findOne({
+    where: { id: address.country_id },
+  });
+  const city = await citiesRepo.findOne({
+    where: { id: address.city_id },
+  });
+  const state = await statesRepo.findOne({
+    where: { id: address.state_id },
+  });
+  const country = await countriesRepo.findOne({
+    where: { id: address.country_id },
+  });
 
   if (!category) {
     throw new AppError("Category not found", 404);
   }
   if (!profile) {
     throw new AppError("Profile not found", 404);
+  }
+  if (!district) {
+    throw new AppError("District not found", 404);
+  }
+  if (!city) {
+    throw new AppError("City not found", 404);
+  }
+  if (!state) {
+    throw new AppError("State not found", 404);
+  }
+  if (!country) {
+    throw new AppError("Country not found", 404);
   }
 
   const addresses = await addressRepo.find();
@@ -53,7 +85,15 @@ const createActivityService = async (
   let newAddress: Address;
 
   if (!addressAlreadyExists) {
-    newAddress = addressRepo.create({ ...address });
+    newAddress = addressRepo.create({
+      street: address.street,
+      number: address.number,
+      zip_code: address.zip_code,
+      district: district,
+      city: city,
+      state: state,
+      country: country,
+    });
     await addressRepo.save(newAddress);
   }
 
