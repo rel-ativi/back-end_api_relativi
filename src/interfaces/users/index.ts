@@ -21,12 +21,6 @@ export interface IUserResponse {
   is_pro_user?: boolean;
 }
 
-export interface IUserCompleteResponse extends IUserResponse {
-  createdAt: Date;
-  updatedAt: Date;
-  profile: Profile | null;
-}
-
 export interface ISimpleResponse {
   message: string;
 }
