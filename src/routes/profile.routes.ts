@@ -40,6 +40,7 @@ export const profileRoutes = () => {
     authStatusMiddleware,
     profilesListFavoritesController
   );
+
   routes.get("/schedules", authStatusMiddleware, listScheduleController);
   routes.get(
     "/history",
