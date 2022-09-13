@@ -18,7 +18,7 @@ describe("Create a user", () => {
 
     afterAll(async () => await connection.destroy())
 
-    test(" Must be able to create a user", async () => {
+    test("Must be able to create a user", async () => {
 
         const response = await request(app).post("/users").send(userCreate)
 
@@ -40,6 +40,8 @@ describe("Create a user", () => {
     })
 
     test("Should not be able to create a user that already exists", async () => {
+
+        await request(app).post("/users").send(userCreate)
 
         const response = await request(app).post("/users").send(userCreate)
 
