@@ -1,3 +1,4 @@
+import { hash } from "bcryptjs";
 import AppDataSource from "../../data-source";
 import { User } from "../../entities/users.entity";
 import { AppError } from "../../errors/AppError";
@@ -6,6 +7,7 @@ import { ISimpleResponse } from "../../interfaces/users";
 const updateUserService = async (
   name: string,
   email: string,
+  password: string,
   id: string
 ): Promise<ISimpleResponse> => {
   const userRepository = AppDataSource.getRepository(User);
@@ -17,11 +19,7 @@ const updateUserService = async (
     throw new AppError("User not found", 404);
   }
 
-  const exists = await userRepository.findOneBy({
-    email,
-  });
-
-  if ((!name && !email) || exists) {
+  if (!name && !email && !password) {
     throw new AppError("Bad request", 400);
   }
 
@@ -33,9 +31,26 @@ const updateUserService = async (
   }
 
   if (email) {
+    const exists = await userRepository.findOneBy({
+      email,
+    });
+
+    if (exists) {
+      throw new AppError("Bad request", 400);
+    }
+
     await userRepository.save({
       id,
       email,
+    });
+  }
+
+  if (password) {
+    const hashPassword = await hash(password, 10);
+
+    await userRepository.save({
+      id,
+      password: hashPassword,
     });
   }
 
