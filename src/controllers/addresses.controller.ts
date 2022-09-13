@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { AppError } from "../../errors/AppError";
-import addressesCreateService from "../../services/addresses/addressesCreate.service";
-import addressesDeleteService from "../../services/addresses/addressesDelete.service";
-import addressesUpdateService from "../../services/addresses/addressesUpdate.service";
+import { AppError } from "../errors/AppError";
+import addressesCreateService from "../services/addresses/addressesCreate.service";
+import addressesDeleteService from "../services/addresses/addressesDelete.service";
+import addressesUpdateService from "../services/addresses/addressesUpdate.service";
 
 export const addressesCreateController = async (req:Request, res:Response) => {
     

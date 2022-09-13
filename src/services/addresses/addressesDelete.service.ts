@@ -12,8 +12,10 @@ const addressesDeleteService = async (id: string) => {
     const deleteAddress = addresses.find((address) => address.id === id);
 
     if(!deleteAddress){
-        throw new AppError('Address does not exist')
+        throw new AppError('Address does not exist', 404)
     }
+
+    await   addressesRepository.delete(deleteAddress)
 };
 
 export default addressesDeleteService;
