@@ -35,11 +35,19 @@ export class Profile {
   @JoinColumn()
   address: Address;
 
-  @OneToOne(() => BankInfo, { eager: true, nullable: true })
+  @OneToOne(() => BankInfo, {
+    eager: true,
+    nullable: true,
+    onDelete: "CASCADE",
+  })
   @JoinColumn()
   bank_info: BankInfo;
 
-  @OneToOne(() => PaymentInfo, { eager: true, nullable: true })
+  @OneToOne(() => PaymentInfo, {
+    eager: true,
+    nullable: true,
+    onDelete: "CASCADE",
+  })
   @JoinColumn()
   payment_info_id: PaymentInfo;
 
