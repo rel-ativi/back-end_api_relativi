@@ -1,10 +1,11 @@
 import { DataSource } from "typeorm"
 import AppDataSource from "../../../data-source"
 import newSessionService from "../../../services/session/newSession.service"
-import { admLogin, notAdmLogin } from "../../mock"
+import createUserService from "../../../services/users/createUser.service"
+import { admLogin, notAdmLogin, userCreate } from "../../mock"
 
 
-describe("Logging in", () => {
+describe("Logging in test unit", () => {
     
     let connection: DataSource
 
@@ -19,9 +20,10 @@ describe("Logging in", () => {
 
     test("Should be able to login with the user", async () => {
 
+        await createUserService(userCreate)
+
         const result = await newSessionService(admLogin)
 
-        expect(result).toBe(200)
         expect(result).toHaveProperty("token")
     })
     
@@ -29,7 +31,6 @@ describe("Logging in", () => {
 
         const result = await newSessionService(notAdmLogin)
 
-        expect(result).toBe(403)
         expect(result).toHaveProperty("message")
     })
 })
