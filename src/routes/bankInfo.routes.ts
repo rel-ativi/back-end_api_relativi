@@ -28,10 +28,6 @@ export const bankInfoRoutes = () => {
   );
   routes.delete(
     "",
-<<<<<<< HEAD
-
-=======
->>>>>>> current-application-state
     authStatusMiddleware,
     proUserStatusMiddleware,
     deleteBankController
