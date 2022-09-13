@@ -1,8 +1,8 @@
 import request from "supertest"
-import app from "../../app"
+import app from "../../../app"
 import { DataSource } from "typeorm"
-import AppDataSource from "../../data-source"
-import { admLogin, notAdmLogin, userCreate, userCreateNotAdm } from "../mock"
+import AppDataSource from "../../../data-source"
+import { admLogin, notAdmLogin, userCreate, userCreateNotAdm } from "../../mock"
 
 
 describe("Delete a user", () => {

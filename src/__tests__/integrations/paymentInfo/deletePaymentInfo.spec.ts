@@ -1,11 +1,11 @@
 import request from "supertest"
-import app from "../../app"
-import AppDataSource from "../../data-source"
+import app from "../../../app"
+import AppDataSource from "../../../data-source"
 import { DataSource } from "typeorm"
-import { admLogin, createPayment, userCreate } from "../mock"
+import { admLogin, createPayment, userCreate } from "../../mock"
 
 
-describe("Update a payment", () => {
+describe("Delete a payment", () => {
 
     let connection: DataSource
 
@@ -18,7 +18,7 @@ describe("Update a payment", () => {
 
     afterAll(async () => await connection.destroy())
 
-    test("Trying to update a payment", async () => {
+    test("Trying to delete a payment", async () => {
 
         await request(app).post("/users").send(userCreate)
 
@@ -26,17 +26,17 @@ describe("Update a payment", () => {
 
         const payment_info = await request(app).post("/payment_info").send(createPayment)
 
-        const response = await request(app).patch(`/payment_info/${payment_info.body.id}`).set("Authorization", `Bearer ${login.body.token}`)
+        const response = await request(app).delete(`/payment_info/${payment_info.body.id}`).set("Authorization", `Bearer ${login.body.token}`)
 
         expect(response.status).toBe(200)
         expect(response.body).toHaveProperty("message")
     })
 
-    test("Should not be able to update payment without authentication", async () => {
+    test("Should not be able to delete payment without authentication", async () => {
 
         const payment_info = await request(app).post("/payment_info").send(createPayment)
 
-        const response = await request(app).patch(`/payment_info/${payment_info.body.id}`)
+        const response = await request(app).delete(`/payment_info/${payment_info.body.id}`)
 
         expect(response.status).toBe(401)
         expect(response.body).toHaveProperty("message")

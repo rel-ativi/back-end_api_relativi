@@ -1,8 +1,8 @@
 import request from "supertest"
-import app from "../../app"
-import AppDataSource from "../../data-source"
+import app from "../../../app"
+import AppDataSource from "../../../data-source"
 import { DataSource } from "typeorm"
-import { admLogin, createPayment, userCreate } from "../mock"
+import { admLogin, createPayment, userCreate } from "../../mock"
 
 
 describe("Create a payment", () => {
