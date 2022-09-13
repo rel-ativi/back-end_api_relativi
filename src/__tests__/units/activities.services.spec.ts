@@ -85,7 +85,7 @@ describe("Testing day services", () => {
   });
 });
 
-describe("Testing day services", () => {
+describe("Testing activity services", () => {
   let connection: DataSource;
 
   beforeAll(async () => {

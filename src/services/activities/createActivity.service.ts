@@ -37,15 +37,16 @@ const createActivityService = async (
   const profileRepo = AppDataSource.getRepository(Profile);
   const activityScheduleRepo = AppDataSource.getRepository(ActivitySchedule);
 
+  const districts = await districtsRepo.find();
+
   const category = await categoryRepo.findOne({
     where: { id: category_id },
   });
   const profile = await profileRepo.findOne({
     where: { id: profile_id },
   });
-  const district = await districtsRepo.findOne({
-    where: { id: address.country_id },
-  });
+
+  const district = districts.find((dis) => dis.id === address.district_id);
   const city = await citiesRepo.findOne({
     where: { id: address.city_id },
   });
