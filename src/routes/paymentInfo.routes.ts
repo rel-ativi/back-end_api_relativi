@@ -1,5 +1,10 @@
 import { Router } from "express";
 
+import {
+  createPaymentController,
+  deletePaymentController,
+  updatePaymentController,
+} from "../controllers/payment.controllers";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
 import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
 import { paymentInfoSchema } from "../schemas/paymentInfo.schema";
@@ -10,19 +15,11 @@ export const paymentInfoRoutes = () => {
   routes.post(
     "",
     authStatusMiddleware,
-    schemaValidationMiddleware(paymentInfoSchema)
-    // create controller
+    schemaValidationMiddleware(paymentInfoSchema),
+    createPaymentController
   );
-  routes.patch(
-    "",
-    authStatusMiddleware
-    // update controller
-  );
-  routes.delete(
-    "",
-    authStatusMiddleware
-    // delete controller
-  );
+  routes.patch("", authStatusMiddleware, updatePaymentController);
+  routes.delete("", authStatusMiddleware, deletePaymentController);
 
   return routes;
 };

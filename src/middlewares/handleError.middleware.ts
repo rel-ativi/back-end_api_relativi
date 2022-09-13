@@ -13,6 +13,7 @@ const handleErrorMiddleware = async (
     });
   }
 
+  console.log(`ERRO AQUI: ${error.message}`);
   return res.status(500).json({
     message: "Internal server error",
   });

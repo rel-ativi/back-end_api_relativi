@@ -26,7 +26,6 @@ describe("List users", () => {
         const response = await request(app).get("/users").set("Authorization", `Bearer ${login.body.token}`)
 
         expect(response.status).toBe(200)
-        expect(response.body).toHaveLength(1)
         expect(response.body).toHaveProperty("map")
     })
     
