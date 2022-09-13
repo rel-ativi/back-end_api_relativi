@@ -18,7 +18,7 @@ const createPaymentService = async (
     throw new AppError("Profile not found", 404);
   }
 
-  if (profile!.payment_info_id) {
+  if (profile!.payment_info) {
     throw new AppError("user already has a payment method");
   }
 
@@ -47,7 +47,7 @@ const createPaymentService = async (
   paymentInfoRepository.create(payment);
   await paymentInfoRepository.save(payment);
 
-  profileRepository.update(profile!.id, { payment_info_id: payment });
+  profileRepository.update(profile!.id, { payment_info: payment });
 
   return payment;
 };

@@ -18,7 +18,7 @@ const deletePaymentService = async (id: string) => {
     throw new AppError("user not found", 404);
   }
 
-  const findPayment = profile!.payment_info_id.id;
+  const findPayment = profile!.payment_info.id;
 
   if (!findPayment) {
     throw new AppError("user does not have a payment method");

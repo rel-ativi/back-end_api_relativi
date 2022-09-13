@@ -41,13 +41,19 @@ export class Profile {
 
   @OneToOne(() => PaymentInfo, { eager: true, nullable: true })
   @JoinColumn()
-  payment_info_id: PaymentInfo;
+  payment_info: PaymentInfo;
 
   @OneToMany(() => Activity, (activities) => activities.created_by, {
     eager: true,
     nullable: true,
   })
   activities: Activity[];
+
+  @OneToMany(() => Address, (addresses) => addresses.created_by, {
+    eager: true,
+    nullable: true,
+  })
+  adresses: Address[];
 
   @OneToMany(() => Certification, (certifications) => certifications.profile, {
     eager: true,

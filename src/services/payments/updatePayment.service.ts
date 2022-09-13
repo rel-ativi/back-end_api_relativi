@@ -21,7 +21,7 @@ const updatePaymentService = async (
     throw new AppError("access denied", 404);
   }
 
-  const findPayment = profile.payment_info_id.id;
+  const findPayment = profile.payment_info.id;
 
   if (!findPayment) {
     throw new AppError("this account does not have a payment method");

@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import {
   Column,
   Entity,
@@ -26,6 +27,10 @@ export class Address {
 
   @Column({ length: 8 })
   zip_code: string;
+
+  @ManyToOne(() => Profile)
+  @Exclude()
+  created_by: Profile;
 
   @ManyToOne(() => District, { eager: true })
   district: District;
