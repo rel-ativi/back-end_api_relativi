@@ -1,7 +1,23 @@
 import { Router } from "express";
+
 import {
+  addressDeleteController,
   addressesCreateController,
+  addressesUpdateController,
+  cityCreateController,
+  countryCreateController,
+  deleteCityController,
+  deleteCountryController,
+  deleteDistrictController,
+  deleteStateController,
   districtCreateController,
+  listAllAddressesController,
+  listCitiesController,
+  listCountriesController,
+  listDistrictsController,
+  listStatesController,
+  listUserAddressesController,
+  stateCreateController,
 } from "../controllers/addresses.controller";
 
 import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
@@ -30,76 +46,59 @@ export const addressRoutes = () => {
     "/cities",
     authStatusMiddleware,
     admStatusMiddleware,
-    schemaValidationMiddleware(nameOnlySchema)
-    // create controller
+    schemaValidationMiddleware(nameOnlySchema),
+    cityCreateController
   );
   routes.post(
     "/states",
     authStatusMiddleware,
     admStatusMiddleware,
-    schemaValidationMiddleware(nameOnlySchema)
-    // create controller
+    schemaValidationMiddleware(nameOnlySchema),
+    stateCreateController
   );
   routes.post(
     "/countries",
     authStatusMiddleware,
     admStatusMiddleware,
-    schemaValidationMiddleware(nameOnlySchema)
-    // create controller
+    schemaValidationMiddleware(nameOnlySchema),
+    countryCreateController
   );
+  routes.get("", authStatusMiddleware, listUserAddressesController);
   routes.get(
-    "/districts",
-    authStatusMiddleware
-    // list all controller
+    "/all",
+    admStatusMiddleware,
+    authStatusMiddleware,
+    listAllAddressesController
   );
-  routes.get(
-    "/cities",
-    authStatusMiddleware
-    // list all controller
-  );
-  routes.get(
-    "/states",
-    authStatusMiddleware
-    // list all controller
-  );
-  routes.get(
-    "/countries",
-    authStatusMiddleware
-    // list all controller
-  );
-  routes.patch(
-    "/:id",
-    authStatusMiddleware
-    // update controller
-  );
-  routes.delete(
-    "/:id",
-    authStatusMiddleware
-    // delete controller
-  );
+  routes.get("/districts", authStatusMiddleware, listDistrictsController);
+  routes.get("/cities", authStatusMiddleware, listCitiesController);
+  routes.get("/states", authStatusMiddleware, listStatesController);
+  routes.get("/countries", authStatusMiddleware, listCountriesController);
+  routes.patch("/:id", authStatusMiddleware, addressesUpdateController);
+  routes.delete("/:id", authStatusMiddleware, addressDeleteController);
   routes.delete(
     "/districts/:id",
     authStatusMiddleware,
-    admStatusMiddleware
-    // delete controller
+    admStatusMiddleware,
+    deleteDistrictController
   );
   routes.delete(
     "/cities/:id",
     authStatusMiddleware,
-    admStatusMiddleware
-    // delete controller
+    admStatusMiddleware,
+    deleteCityController
   );
   routes.delete(
     "/states/:id",
     authStatusMiddleware,
-    admStatusMiddleware
-    // delete controller
+    admStatusMiddleware,
+    deleteStateController
   );
   routes.delete(
     "/countries/:id",
     authStatusMiddleware,
-    admStatusMiddleware
-    // delete controller
+    admStatusMiddleware,
+    deleteCountryController
   );
 
   return routes;
