@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 
-import profilesAddFavoritesService from "../../services/profiles/profilesAddFavorites.service";
-import profilesListFavoritesService from "../../services/profiles/profilesListFavorites.service";
-import profilesUpdateService from "../../services/profiles/profilesUpdate.service";
+import profilesAddFavoritesService from "../services/profiles/profilesAddFavorites.service";
+import profilesListFavoritesService from "../services/profiles/profilesListFavorites.service";
+import profilesUpdateService from "../services/profiles/profilesUpdate.service";
 
 export const profilesUpdateController = async (req: Request, res: Response) => {
   const { bio, phone } = req.body;
