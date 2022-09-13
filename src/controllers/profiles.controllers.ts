@@ -6,7 +6,8 @@ import profilesUpdateService from "../services/profiles/profilesUpdate.service";
 
 export const profilesUpdateController = async (req: Request, res: Response) => {
   const { bio, phone } = req.body;
-  const update = await profilesUpdateService({ bio, phone });
+  const { profile_id } = req.user;
+  const update = await profilesUpdateService(profile_id, { bio, phone });
 
   return res.status(201).json(update);
 };
