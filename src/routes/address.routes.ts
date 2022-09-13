@@ -1,4 +1,8 @@
 import { Router } from "express";
+import {
+  addressesCreateController,
+  districtCreateController,
+} from "../controllers/addresses.controller";
 
 import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
@@ -12,15 +16,15 @@ export const addressRoutes = () => {
   routes.post(
     "",
     authStatusMiddleware,
-    schemaValidationMiddleware(addressSchema)
-    // create controller
+    schemaValidationMiddleware(addressSchema),
+    addressesCreateController
   );
   routes.post(
     "/districst",
     authStatusMiddleware,
     admStatusMiddleware,
-    schemaValidationMiddleware(nameOnlySchema)
-    // create controller
+    schemaValidationMiddleware(nameOnlySchema),
+    districtCreateController
   );
   routes.post(
     "/cities",
