@@ -1,7 +1,7 @@
 import { Express } from "express";
+
 import { activityRoutes } from "./activity.routes";
 import { addressRoutes } from "./address.routes";
-
 import { bankInfoRoutes } from "./bankInfo.routes";
 import { paymentInfoRoutes } from "./paymentInfo.routes";
 import { profileRoutes } from "./profile.routes";

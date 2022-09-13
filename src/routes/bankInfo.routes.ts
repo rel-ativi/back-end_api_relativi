@@ -4,6 +4,11 @@ import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
 import { proUserStatusMiddleware } from "../middlewares/proUserStatus.middleware";
 import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
 import { bankInfoSchema } from "../schemas/bankInfo.schema";
+import {
+  createBankController,
+  deleteBankController,
+  updateBankController,
+} from "../controllers/bank.controller";
 
 const routes = Router();
 
@@ -12,20 +17,20 @@ export const bankInfoRoutes = () => {
     "",
     authStatusMiddleware,
     proUserStatusMiddleware,
-    schemaValidationMiddleware(bankInfoSchema)
-    // create controller
+    schemaValidationMiddleware(bankInfoSchema),
+    createBankController
   );
   routes.patch(
     "",
     authStatusMiddleware,
-    proUserStatusMiddleware
-    // update controller
+    proUserStatusMiddleware,
+    updateBankController
   );
   routes.delete(
     "",
     authStatusMiddleware,
-    proUserStatusMiddleware
-    // delete controller
+    proUserStatusMiddleware,
+    deleteBankController
   );
 
   return routes;
