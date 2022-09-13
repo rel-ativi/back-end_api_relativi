@@ -21,18 +21,18 @@ export const createUserController = async (req: Request, res: Response) => {
 
 export const listUsersController = async (req: Request, res: Response) => {
   const users = await listUsersService();
-  return res.json(instanceToPlain(users));
+  return res.status(200).json(instanceToPlain(users));
 };
 
 export const listUserController = async (req: Request, res: Response) => {
   const user = await listUserService(req.user.id);
-  return res.json(instanceToPlain(user));
+  return res.status(200).json(instanceToPlain(user));
 };
 
 export const deleteUserController = async (req: Request, res: Response) => {
   const { id } = req.params;
   const response = await deleteUserService(id);
-  return res.status(204);
+  return res.status(204).json(response);
 };
 
 export const updateUserController = async (req: Request, res: Response) => {
