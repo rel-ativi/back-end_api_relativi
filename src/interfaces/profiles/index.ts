@@ -20,3 +20,8 @@ export interface IProfileSchema
 export interface IUserScheduleRequest {
   date: Date;
 }
+
+export class IScheduleRequest {
+  date: string;
+  hour: string;
+}

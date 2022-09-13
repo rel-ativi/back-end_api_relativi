@@ -4,13 +4,14 @@ import createScheduleService from "../services/schedules/createSchedule.service"
 import listScheduleService from "../services/schedules/listSchedule.service";
 import deleteScheduleService from "../services/schedules/deleteSchedule.service";
 
-export const createScheduleController = async (req: Request, res: Response) => {
-  const { activityId } = req.params;
-  const { userId, date, hour } = req.body; //provisóriamente será passada uma chave userId na request para pegar o user, por hora
+import { IScheduleRequest } from "../interfaces/profiles";
 
-  const schedule = await createScheduleService({
-    activityId,
-    userId,
+export const createScheduleController = async (req: Request, res: Response) => {
+  const { id } = req.params; //id da activy
+  const { profile_id } = req.user; //id do profile
+  const { date, hour }: IScheduleRequest = req.body; //provisóriamente será passada uma chave userId na request para pegar o user, por hora
+
+  const schedule = await createScheduleService(id, profile_id, {
     date,
     hour,
   });
@@ -19,11 +20,9 @@ export const createScheduleController = async (req: Request, res: Response) => {
 };
 
 export const listScheduleController = async (req: Request, res: Response) => {
-  const { id } = req.body;
+  const { profile_id } = req.user;
 
-  console.log(id, "1:o id recebido");
-
-  const schedules = await listScheduleService(id);
+  const schedules = await listScheduleService(profile_id);
 
   return res.json(schedules);
 };

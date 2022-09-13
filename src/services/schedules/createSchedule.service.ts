@@ -4,14 +4,12 @@ import { UserSchedule } from "../../entities/user_schedule.entity";
 import { Activity } from "../../entities/activities.entity";
 import { Profile } from "../../entities/profiles.entity";
 import { AppError } from "../../errors/AppError";
-import { IScheduleRequest } from "../../interfaces/generic";
-
-const createScheduleService = async ({
-  activityId,
-  userId,
-  date,
-  hour,
-}: IScheduleRequest) => {
+import { IScheduleRequest } from "../../interfaces/profiles";
+const createScheduleService = async (
+  activityId: string,
+  userId: string,
+  { date, hour }: IScheduleRequest
+) => {
   const scheduleRepository = AppDataSource.getRepository(UserSchedule);
   const activityReository = AppDataSource.getRepository(Activity);
   const profileRepository = AppDataSource.getRepository(Profile);

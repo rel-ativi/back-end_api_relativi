@@ -7,13 +7,6 @@ export class INameNumber {
   number: number;
 }
 
-export class IScheduleRequest {
-  activityId: string;
-  userId: string;
-  date: string;
-  hour: string;
-}
-
 export class ISchedule {
   activityId: string;
   userId: string;
