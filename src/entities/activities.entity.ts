@@ -60,11 +60,14 @@ export class Activity {
   @ManyToOne(() => Category, { eager: true })
   category: Category;
 
-  @OneToOne(() => Address, (address) => address.address_of, { eager: true })
+  @OneToOne(() => Address, (address) => address.address_of, {
+    eager: true,
+    onDelete: "CASCADE",
+  })
   @JoinColumn()
   address: Address;
 
-  @OneToOne(() => ActivitySchedule, { eager: true })
+  @OneToOne(() => ActivitySchedule, { eager: true, onDelete: "CASCADE" })
   @JoinColumn()
   activity_schedule: ActivitySchedule;
 

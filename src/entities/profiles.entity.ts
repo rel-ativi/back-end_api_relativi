@@ -31,46 +31,66 @@ export class Profile {
   @OneToOne(() => Address, (address) => address.address_of, {
     eager: true,
     nullable: true,
+    onDelete: "CASCADE",
   })
   @JoinColumn()
   address: Address;
 
-  @OneToOne(() => BankInfo, { eager: true, nullable: true })
+  @OneToOne(() => BankInfo, {
+    eager: true,
+    nullable: true,
+    onDelete: "CASCADE",
+  })
   @JoinColumn()
   bank_info: BankInfo;
 
-  @OneToOne(() => PaymentInfo, { eager: true, nullable: true })
+  @OneToOne(() => PaymentInfo, {
+    eager: true,
+    nullable: true,
+    onDelete: "CASCADE",
+  })
   @JoinColumn()
   payment_info: PaymentInfo;
 
   @OneToMany(() => Activity, (activities) => activities.created_by, {
     eager: true,
     nullable: true,
+    onDelete: "CASCADE",
   })
   activities: Activity[];
 
   @OneToMany(() => Address, (addresses) => addresses.created_by, {
     eager: true,
     nullable: true,
+    onDelete: "CASCADE",
   })
   adresses: Address[];
 
   @OneToMany(() => Certification, (certifications) => certifications.profile, {
     eager: true,
+    nullable: true,
+    onDelete: "CASCADE",
   })
   certifications: Certification[];
 
   @OneToMany(() => UserSchedule, (schedule) => schedule.profile, {
     eager: true,
+    nullable: true,
+    onDelete: "CASCADE",
   })
   scheduled_activities: UserSchedule[];
 
   @OneToMany(() => ActivityHistory, (schedule) => schedule.profile, {
     eager: true,
+    onDelete: "CASCADE",
   })
   activity_history: ActivityHistory[];
 
-  @ManyToMany(() => Activity, { eager: true })
+  @ManyToMany(() => Activity, {
+    eager: true,
+    nullable: true,
+    onDelete: "CASCADE",
+  })
   @JoinTable()
   favorite_activities: Activity[];
 }

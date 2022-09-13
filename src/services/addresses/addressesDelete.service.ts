@@ -27,6 +27,16 @@ const addressesDeleteService = async (
     throw new AppError("Access denied", 403);
   }
 
+  const parent = deleteAddress.address_of;
+
+  if (!(parent instanceof Profile)) {
+    throw new AppError("Can not delete activity address", 400);
+  }
+
+  await profilesRepo.update(id, {
+    address: { id: undefined },
+  });
+
   await addressesRepo.delete(deleteAddress);
 };
 
