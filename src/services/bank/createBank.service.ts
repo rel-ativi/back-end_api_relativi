@@ -2,12 +2,11 @@ import { BankInfo } from "../../entities/bank_info.entity";
 import { Profile } from "../../entities/profiles.entity";
 import { AppError } from "../../errors/AppError";
 import AppDataSource from "../../data-source";
+import { IBankInfo } from "../../interfaces/bank_info";
 
 const createBankService = async (
   id: string,
-  bank: string,
-  agency: string,
-  account_number: string
+  { bank, agency, account_number }: IBankInfo
 ) => {
   if (!id) {
     throw new AppError("access denied", 404);

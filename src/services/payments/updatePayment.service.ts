@@ -2,13 +2,10 @@ import { PaymentInfo } from "../../entities/payment_info.entity";
 import { Profile } from "../../entities/profiles.entity";
 import { AppError } from "../../errors/AppError";
 import AppDataSource from "../../data-source";
-
+import { IPaymentInfoUpdate } from "../../interfaces/payment_info";
 const updatePaymentService = async (
-  id?: string,
-  card_name?: string,
-  card?: string,
-  due_date?: string,
-  sec_code?: number
+  id: string,
+  { card_name, card, due_date, sec_code }: IPaymentInfoUpdate
 ) => {
   if (!id) {
     throw new AppError("user not logged in");
