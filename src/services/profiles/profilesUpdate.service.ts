@@ -13,13 +13,10 @@ const profilesUpdateService = async (profile_id: string, {bio, phone}: IProfile)
         throw new AppError("Profile not exists", 404)
     }
 
-    const newBio = bio ? bio : profile.bio
-    const newPhone = phone ? phone : profile.phone
-
     const update = {
         ...profile,
-        newBio,
-        newPhone
+        bio: bio ? bio : profile.bio,
+        phone: phone ? phone : profile.phone
     }
 
     await profileRepo.save(update)
