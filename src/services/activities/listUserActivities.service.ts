@@ -1,9 +1,12 @@
 import AppDataSource from "../../data-source";
+import { Activity } from "../../entities/activities.entity";
 
 import { Profile } from "../../entities/profiles.entity";
 import { AppError } from "../../errors/AppError";
 
-const listUserActivitiesService = async (profile_id: string) => {
+const listUserActivitiesService = async (
+  profile_id: string
+): Promise<Activity[]> => {
   const profileRepo = AppDataSource.getRepository(Profile);
   const profiles = await profileRepo.find();
 

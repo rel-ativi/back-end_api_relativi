@@ -1,21 +1,33 @@
 import AppDataSource from "../../data-source";
 import { Address } from "../../entities/addresses.entity";
+import { Profile } from "../../entities/profiles.entity";
 import { AppError } from "../../errors/AppError";
 
+const addressesDeleteService = async (
+  id: string,
+  profile_id: string,
+  is_adm: boolean
+) => {
+  const addressesRepo = AppDataSource.getRepository(Address);
+  const profilesRepo = AppDataSource.getRepository(Profile);
 
-const addressesDeleteService = async (id: string) => {
+  const addresses = await addressesRepo.find();
 
-    const addressesRepository = AppDataSource.getRepository(Address);
+  const deleteAddress = addresses.find((address) => address.id === id);
 
-    const addresses = await addressesRepository.find();
+  const profile = await profilesRepo.findOne({
+    where: { id: profile_id },
+  });
 
-    const deleteAddress = addresses.find((address) => address.id === id);
+  if (!deleteAddress) {
+    throw new AppError("Address does not exist", 404);
+  }
 
-    if(!deleteAddress){
-        throw new AppError('Address does not exist', 404)
-    }
+  if (!(deleteAddress.created_by === profile!) && !is_adm) {
+    throw new AppError("Access denied", 403);
+  }
 
-    await   addressesRepository.delete(deleteAddress)
+  await addressesRepo.delete(deleteAddress);
 };
 
 export default addressesDeleteService;

@@ -32,7 +32,8 @@ export const listUserController = async (req: Request, res: Response) => {
 export const deleteUserController = async (req: Request, res: Response) => {
   const { id } = req.params;
   const response = await deleteUserService(id);
-  return res.status(204).json(response);
+
+  return res.status(204).send();
 };
 
 export const updateUserController = async (req: Request, res: Response) => {
@@ -40,5 +41,5 @@ export const updateUserController = async (req: Request, res: Response) => {
 
   const updated = await updateUserService(name, email, password, req.user.id);
 
-  return res.status(200).json(updated);
+  return res.status(200).json(instanceToPlain(updated));
 };

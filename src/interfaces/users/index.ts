@@ -20,7 +20,3 @@ export interface IUserResponse {
   is_adm?: boolean;
   is_pro_user?: boolean;
 }
-
-export interface ISimpleResponse {
-  message: string;
-}
