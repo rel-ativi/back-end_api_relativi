@@ -1,11 +1,11 @@
-import request from "supertest"
-import app from "../../app"
-import AppDataSource from "../../data-source"
 import { DataSource } from "typeorm"
-import { admLogin, createProfile, updateProfile, userCreate } from "../mock"
+import AppDataSource from "../../../data-source"
+import request from "supertest"
+import app from "../../../app"
+import { admLogin, createProfile, userCreate } from "../../mock"
 
 
-describe("Update  a profile", () => {
+describe("Create a profile", () => {
 
     let connection: DataSource
 
@@ -16,31 +16,25 @@ describe("Update  a profile", () => {
         .catch(err => console.error("Error during Data Source initialization", err))
     })
 
-    afterAll(async () => connection.destroy())
+    afterAll(async () => await connection.destroy())
 
-    test("", async () => {
+    test("Trying to create a profile", async () => {
 
         await request(app).post("/users").send(userCreate)
 
         const login = await request(app).post("/login").send(admLogin)
-
-        const responseUpdate = await request(app).patch("/profile").send(updateProfile).set("Authorization", `Bearer ${login.body.token}`)
-
         const response = await request(app).post("/profile").send(createProfile).set("Authorization", `Bearer ${login.body.token}`)
 
-
-        expect(responseUpdate.status).toBe(200)
-        expect(responseUpdate.body).toHaveProperty("message")
-        
+        expect(response.status).toBe(201)
         expect(response.body).toEqual(
 
             expect.objectContaining({
                 id: response.body.id,
-                bio: responseUpdate?.body.bio,
-                phone: responseUpdate?.body.phone,
-                address: responseUpdate.body?.address,
-                bank_info: responseUpdate.body?.bank_info,
-                payment_info_id: responseUpdate.body?.payment_info_id,
+                bio: createProfile?.bio,
+                phone: createProfile?.phone,
+                address: createProfile?.address,
+                bank_info: createProfile?.bank_info,
+                payment_info_id: response.body?.payment_info_id,
                 certifications: response.body?.certifications,
                 scheduled_activities: response.body?.scheduled_activities,
                 activity_history: response.body?.activity_history,
@@ -48,10 +42,10 @@ describe("Update  a profile", () => {
             })
         )
     })
-        
-    test("Should not be able to update profile without authentication", async () => {
+    
+    test("Should not be able to create profile without authentication", async () => {
 
-        const response = await request(app).patch("/profile").send(updateProfile)
+        const response = await request(app).post("/profile").send(createProfile)
 
         expect(response.status).toBe(401)
         expect(response.body).toHaveProperty("message")

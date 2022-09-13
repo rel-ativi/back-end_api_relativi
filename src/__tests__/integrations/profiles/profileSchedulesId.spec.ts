@@ -1,11 +1,11 @@
 import { DataSource } from "typeorm"
-import AppDataSource from "../../data-source"
+import AppDataSource from "../../../data-source"
 import request from "supertest"
-import app from "../../app"
-import { admLogin, createSchedules, userCreate } from "../mock"
+import app from "../../../app"
+import { admLogin, createSchedules, userCreate } from "../../mock"
 
 
-describe("", () => {
+describe("View profile schedules", () => {
 
     let connection: DataSource
 
@@ -18,7 +18,7 @@ describe("", () => {
 
     afterAll(async () => connection.destroy())
 
-    test("", async () => {
+    test("Trying to view profile schedules", async () => {
 
         await request(app).post("/users").send(userCreate)
 

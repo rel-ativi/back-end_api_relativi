@@ -1,8 +1,8 @@
 import { DataSource } from "typeorm"
-import AppDataSource from "../../data-source"
+import AppDataSource from "../../../data-source"
 import request from "supertest"
-import app from "../../app"
-import { admLogin, userCreate } from "../mock"
+import app from "../../../app"
+import { admLogin, userCreate } from "../../mock"
 
 
 describe("Profile schedules list", () => {
