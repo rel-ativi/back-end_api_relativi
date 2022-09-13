@@ -28,13 +28,13 @@ export const userUpdate: IUserRequest = {
 }
 
 export const admLogin = {
-    name: "example@org.com.br",
-    email:"*)#Ygafbius241"
+    email: "example@org.com.br",
+    password: "*)#Ygafbius241"
 }
 
 export const notAdmLogin = {
-    name: "example@gmail.com.br",
-    email:"*)#Ygafbius241"
+    email: "example@gmail.com.br",
+    password: "*)#Ygafbius241"
 }
 
 export const createProfile: IProfile = {
