@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import {
   Column,
   CreateDateColumn,
@@ -53,6 +54,7 @@ export class Activity {
   updated_at: Date;
 
   @ManyToOne(() => Profile)
+  @Exclude()
   created_by: Profile;
 
   @ManyToOne(() => Category, { eager: true })

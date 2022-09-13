@@ -1,3 +1,4 @@
+import { instanceToPlain } from "class-transformer";
 import { Request, Response } from "express";
 
 import {
@@ -28,7 +29,7 @@ export const createActivityController = async (req: Request, res: Response) => {
 
   const activity = await createActivityService(profile_id, { ...activityData });
 
-  return res.status(201).json(activity);
+  return res.status(201).json(instanceToPlain(activity));
 };
 
 export const createActivityScheduleController = async (
