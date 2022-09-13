@@ -4,6 +4,7 @@ import {
   deleteUserController,
   listUserController,
   listUsersController,
+  updateUserController,
 } from "../controllers/user.controllers";
 
 import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
@@ -14,24 +15,10 @@ import { userSchema } from "../schemas/user.schema";
 const routes = Router();
 
 export const userRoutes = () => {
-  routes.post(
-    // internal use only
-    "",
-    schemaValidationMiddleware(userSchema),
-    createUserController
-  );
-  routes.get(
-    "",
-    authStatusMiddleware,
-    admStatusMiddleware,
-    listUsersController
-  );
+  routes.post("", schemaValidationMiddleware(userSchema), createUserController);
+  routes.get("", admStatusMiddleware, listUsersController);
   routes.get("/profile", authStatusMiddleware, listUserController);
-  routes.patch(
-    "",
-    authStatusMiddleware
-    // update controller
-  );
+  routes.patch("", authStatusMiddleware, updateUserController);
   routes.delete("", authStatusMiddleware, deleteUserController);
 
   return routes;
