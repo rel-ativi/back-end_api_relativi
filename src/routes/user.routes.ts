@@ -16,7 +16,12 @@ const routes = Router();
 
 export const userRoutes = () => {
   routes.post("", schemaValidationMiddleware(userSchema), createUserController);
-  routes.get("", admStatusMiddleware, listUsersController);
+  routes.get(
+    "",
+    authStatusMiddleware,
+    admStatusMiddleware,
+    listUsersController
+  );
   routes.get("/profile", authStatusMiddleware, listUserController);
   routes.patch("", authStatusMiddleware, updateUserController);
   routes.delete("", authStatusMiddleware, deleteUserController);

@@ -1,3 +1,4 @@
+import { instanceToPlain } from "class-transformer";
 import { Request, Response } from "express";
 import { IUserRequest } from "../interfaces/users";
 import createUserService from "../services/users/createUser.service";
@@ -20,18 +21,18 @@ export const createUserController = async (req: Request, res: Response) => {
 
 export const listUsersController = async (req: Request, res: Response) => {
   const users = await listUsersService();
-  return res.json(users);
+  return res.json(instanceToPlain(users));
 };
 
 export const listUserController = async (req: Request, res: Response) => {
   const user = await listUserService(req.user.id);
-  return res.json(user);
+  return res.json(instanceToPlain(user));
 };
 
 export const deleteUserController = async (req: Request, res: Response) => {
   const { id } = req.params;
   const response = await deleteUserService(id);
-  return res.status(204).json(response);
+  return res.status(204);
 };
 
 export const updateUserController = async (req: Request, res: Response) => {
