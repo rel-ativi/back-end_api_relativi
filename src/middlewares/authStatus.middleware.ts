@@ -37,6 +37,12 @@ export const authStatusMiddleware = async (
         profile_id: decoded.profile_id,
       };
 
+      if (!req.user.is_active) {
+        return res.status(403).json({
+          message: "Inactive user",
+        });
+      }
+
       next();
     }
   );
