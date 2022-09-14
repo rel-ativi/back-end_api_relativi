@@ -22,31 +22,57 @@ export class Profile {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ length: 512 })
+  @Column({ length: 512, nullable: true })
   bio: string;
 
-  @Column({ length: 24 })
+  @Column({ length: 24, nullable: true })
   phone: string;
 
-  @OneToOne(() => Address, (address) => address.address_of, { eager: true })
+  @OneToOne(() => Address, (address) => address.address_of, {
+    eager: true,
+    nullable: true,
+    onDelete: "SET NULL",
+  })
   @JoinColumn()
   address: Address;
 
-  @OneToOne(() => BankInfo, { eager: true })
+  @OneToOne(() => BankInfo, {
+    eager: true,
+    nullable: true,
+    onDelete: "SET NULL",
+  })
   @JoinColumn()
   bank_info: BankInfo;
 
-  @OneToOne(() => PaymentInfo, { eager: true })
+  @OneToOne(() => PaymentInfo, {
+    eager: true,
+    nullable: true,
+    onDelete: "SET NULL",
+  })
   @JoinColumn()
-  payment_info_id: PaymentInfo;
+  payment_info: PaymentInfo;
+
+  @OneToMany(() => Activity, (activities) => activities.created_by, {
+    eager: true,
+    nullable: true,
+  })
+  activities: Activity[];
+
+  @OneToMany(() => Address, (addresses) => addresses.created_by, {
+    eager: true,
+    nullable: true,
+  })
+  addresses: Address[];
 
   @OneToMany(() => Certification, (certifications) => certifications.profile, {
     eager: true,
+    nullable: true,
   })
   certifications: Certification[];
 
   @OneToMany(() => UserSchedule, (schedule) => schedule.profile, {
     eager: true,
+    nullable: true,
   })
   scheduled_activities: UserSchedule[];
 
@@ -55,7 +81,10 @@ export class Profile {
   })
   activity_history: ActivityHistory[];
 
-  @ManyToMany(() => Activity, { eager: true })
+  @ManyToMany(() => Activity, {
+    eager: true,
+    nullable: true,
+  })
   @JoinTable()
   favorite_activities: Activity[];
 }

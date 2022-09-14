@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import {
   Column,
   CreateDateColumn,
@@ -13,6 +14,7 @@ import {
 import { ActivitySchedule } from "./activity_schedule.entity";
 import { Address } from "./addresses.entity";
 import { Category } from "./categories.entity";
+import { Profile } from "./profiles.entity";
 import { ActivityHistory } from "./user_activity_history.entity";
 import { UserSchedule } from "./user_schedule.entity";
 
@@ -33,8 +35,8 @@ export class Activity {
   @Column({ type: "integer" })
   max_users: number;
 
-  @Column({ type: "decimal", precision: 2, scale: 2 })
-  duration: number;
+  @Column({ length: 4 })
+  duration: string;
 
   @Column({ default: true })
   is_active: boolean;
@@ -45,20 +47,30 @@ export class Activity {
   @Column({ type: "date" })
   starting_date: string;
 
+  @Column({ nullable: true })
+  image_url: string;
+
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
+
+  @ManyToOne(() => Profile)
+  @Exclude()
+  created_by: Profile;
 
   @ManyToOne(() => Category, { eager: true })
   category: Category;
 
-  @OneToOne(() => Address, (address) => address.address_of, { eager: true })
+  @OneToOne(() => Address, (address) => address.address_of, {
+    eager: true,
+    onDelete: "SET NULL",
+  })
   @JoinColumn()
   address: Address;
 
-  @OneToOne(() => ActivitySchedule, { eager: true })
+  @OneToOne(() => ActivitySchedule, { eager: true, onDelete: "SET NULL" })
   @JoinColumn()
   activity_schedule: ActivitySchedule;
 

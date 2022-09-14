@@ -1,5 +1,15 @@
 import { Router } from "express";
+import {
+  profilesAddFavoritesController,
+  profilesListFavoritesController,
+  profilesUpdateController,
+} from "../controllers/profiles.controllers";
 
+import {
+  createScheduleController,
+  deleteScheduleController,
+  listScheduleController,
+} from "../controllers/schedule.controllers";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
 import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
 import { profileSchema, userScheduleSchema } from "../schemas/profile.schema";
@@ -8,41 +18,40 @@ const routes = Router();
 
 export const profileRoutes = () => {
   routes.post(
+    // internal use
     "",
     authStatusMiddleware,
     schemaValidationMiddleware(profileSchema)
     // create controller
   );
   routes.post(
-    "/favorite/:id", //activity id
-    authStatusMiddleware
-    // add/remove activity to favorites controller
+    "/favorites/:id",
+    authStatusMiddleware,
+    profilesAddFavoritesController
   );
   routes.post(
-    "/schedule/:id", //activity id
+    "/schedules/:id", //activity id
     authStatusMiddleware,
-    schemaValidationMiddleware(userScheduleSchema)
-    // schedule activity controller
+    schemaValidationMiddleware(userScheduleSchema),
+    createScheduleController
   );
   routes.get(
-    "/schedule",
-    authStatusMiddleware
-    // list user schedule controller
+    "/favorites",
+    authStatusMiddleware,
+    profilesListFavoritesController
   );
+
+  routes.get("/schedules", authStatusMiddleware, listScheduleController);
   routes.get(
     "/history",
     authStatusMiddleware
     // list user activity history controller
   );
-  routes.patch(
-    "",
-    authStatusMiddleware
-    // update controller (only bio and phone)
-  );
+  routes.patch("", authStatusMiddleware, profilesUpdateController);
   routes.delete(
-    "/schedule/:id", //activity id
-    authStatusMiddleware
-    // delete activity_schedule controller
+    "/schedules/:id", //activity id
+    authStatusMiddleware,
+    deleteScheduleController
   );
   return routes;
 };

@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   api:
@@ -13,7 +13,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    volumes: 
+    volumes:
       - .:/app
 
   db:
@@ -23,7 +23,7 @@ services:
       - 5431:5432
     environment:
       - POSTGRES_USER=hugobler
-      - POSTGRES_PASSWORD=3cedfb95ec872d3ce9153c4af1a0fde3
+      - POSTGRES_PASSWORD=1234
       - POSTGRES_DB=relativi
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U hugobler -d relativi"]

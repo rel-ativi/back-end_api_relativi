@@ -1,8 +1,8 @@
-export class INameOnly {
+export interface INameOnly {
   name: string;
 }
 
-export class INameNumber {
+export interface INameNumber {
   name: string;
   number: number;
 }

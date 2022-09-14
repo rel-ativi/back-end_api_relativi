@@ -1,5 +1,25 @@
 import { Router } from "express";
 
+import {
+  addressDeleteController,
+  addressesCreateController,
+  addressesUpdateController,
+  cityCreateController,
+  countryCreateController,
+  deleteCityController,
+  deleteCountryController,
+  deleteDistrictController,
+  deleteStateController,
+  districtCreateController,
+  listAllAddressesController,
+  listCitiesController,
+  listCountriesController,
+  listDistrictsController,
+  listStatesController,
+  listUserAddressesController,
+  stateCreateController,
+} from "../controllers/addresses.controller";
+
 import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
 import { schemaValidationMiddleware } from "../middlewares/schemaValidation.middleware";
@@ -12,94 +32,73 @@ export const addressRoutes = () => {
   routes.post(
     "",
     authStatusMiddleware,
-    schemaValidationMiddleware(addressSchema)
-    // create controller
+    schemaValidationMiddleware(addressSchema),
+    addressesCreateController
   );
   routes.post(
-    "/district",
+    "/districts",
     authStatusMiddleware,
     admStatusMiddleware,
-    schemaValidationMiddleware(nameOnlySchema)
-    // create controller
+    schemaValidationMiddleware(nameOnlySchema),
+    districtCreateController
   );
   routes.post(
-    "/city",
+    "/cities",
     authStatusMiddleware,
     admStatusMiddleware,
-    schemaValidationMiddleware(nameOnlySchema)
-    // create controller
+    schemaValidationMiddleware(nameOnlySchema),
+    cityCreateController
   );
   routes.post(
-    "/state",
+    "/states",
     authStatusMiddleware,
     admStatusMiddleware,
-    schemaValidationMiddleware(nameOnlySchema)
-    // create controller
+    schemaValidationMiddleware(nameOnlySchema),
+    stateCreateController
   );
   routes.post(
-    "/country",
+    "/countries",
     authStatusMiddleware,
     admStatusMiddleware,
-    schemaValidationMiddleware(nameOnlySchema)
-    // create controller
+    schemaValidationMiddleware(nameOnlySchema),
+    countryCreateController
   );
+  routes.get("", authStatusMiddleware, listUserAddressesController);
   routes.get(
-    "/district",
+    "/all",
+    admStatusMiddleware,
     authStatusMiddleware,
-    admStatusMiddleware
-    // list all controller
+    listAllAddressesController
   );
-  routes.get(
-    "/city",
+  routes.get("/districts", authStatusMiddleware, listDistrictsController);
+  routes.get("/cities", authStatusMiddleware, listCitiesController);
+  routes.get("/states", authStatusMiddleware, listStatesController);
+  routes.get("/countries", authStatusMiddleware, listCountriesController);
+  routes.patch("/:id", authStatusMiddleware, addressesUpdateController);
+  routes.delete("/:id", authStatusMiddleware, addressDeleteController);
+  routes.delete(
+    "/districts/:id",
     authStatusMiddleware,
-    admStatusMiddleware
-    // list all controller
-  );
-  routes.get(
-    "/state",
-    authStatusMiddleware,
-    admStatusMiddleware
-    // list all controller
-  );
-  routes.get(
-    "/country",
-    authStatusMiddleware,
-    admStatusMiddleware
-    // list all controller
-  );
-  routes.patch(
-    "/:id",
-    authStatusMiddleware
-    // update controller
+    admStatusMiddleware,
+    deleteDistrictController
   );
   routes.delete(
-    "/:id",
-    authStatusMiddleware
-    // delete controller
+    "/cities/:id",
+    authStatusMiddleware,
+    admStatusMiddleware,
+    deleteCityController
   );
   routes.delete(
-    "/district/:id",
+    "/states/:id",
     authStatusMiddleware,
-    admStatusMiddleware
-    // delete controller
+    admStatusMiddleware,
+    deleteStateController
   );
   routes.delete(
-    "/city/:id",
+    "/countries/:id",
     authStatusMiddleware,
-    admStatusMiddleware
-    // delete controller
-  );
-  routes.delete(
-    "/state/:id",
-    authStatusMiddleware,
-    admStatusMiddleware
-    // delete controller
-  );
-  routes.delete(
-    "/country/:id",
-    authStatusMiddleware,
-    admStatusMiddleware
-    // delete controller
+    admStatusMiddleware,
+    deleteCountryController
   );
 
   return routes;

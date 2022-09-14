@@ -27,12 +27,15 @@ export class User {
   password: string;
 
   @Column({ default: true })
+  @Exclude()
   is_active: boolean;
 
   @Column({ default: false })
+  @Exclude()
   is_adm: boolean;
 
   @Column({ default: false })
+  @Exclude()
   is_pro_user: boolean;
 
   @CreateDateColumn()

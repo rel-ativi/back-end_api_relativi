@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import e, { Request, Response, NextFunction } from "express";
 import { AppError } from "../errors/AppError";
 
 const handleErrorMiddleware = async (
@@ -13,8 +13,9 @@ const handleErrorMiddleware = async (
     });
   }
 
+  console.log(`ERRO AQUI: ${error}`);
   return res.status(500).json({
-    message: "Internal server error",
+    message: error.message,
   });
 };
 
