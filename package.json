@@ -8,7 +8,7 @@
     "build": "yarn tsc",
     "test": "jest",
     "typeorm": "typeorm-ts-node-commonjs",
-    "start": "node dist/server.js"
+    "start": "node dist/src/server.js"
   },
   "repository": {
     "type": "git",
