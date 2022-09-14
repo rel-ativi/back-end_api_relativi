@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 
 import { Activity } from "./activities.entity";
@@ -14,9 +15,10 @@ export class UserSchedule {
   @Column({ type: "time" })
   hour: string;
 
-  @ManyToOne(() => Activity)
+  @ManyToOne(() => Activity, { eager: true })
   activity: Activity;
 
   @ManyToOne(() => Profile)
+  @Exclude()
   profile: Profile;
 }

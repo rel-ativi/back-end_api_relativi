@@ -1,37 +1,34 @@
+import { instanceToPlain } from "class-transformer";
 import { Request, Response } from "express";
 
+import { IUserScheduleRequest } from "../interfaces/profiles";
+
 import createScheduleService from "../services/schedules/createSchedule.service";
-import listScheduleService from "../services/schedules/listSchedule.service";
 import deleteScheduleService from "../services/schedules/deleteSchedule.service";
+import listScheduleService from "../services/schedules/listSchedule.service";
 
 export const createScheduleController = async (req: Request, res: Response) => {
-  const { activityId } = req.params;
-  const { userId, date, hour } = req.body; //provisóriamente será passada uma chave userId na request para pegar o user, por hora
+  const { id } = req.params;
+  const date: IUserScheduleRequest = req.body;
+  const { profile_id } = req.user;
 
-  const schedule = await createScheduleService({
-    activityId,
-    userId,
-    date,
-    hour,
-  });
+  const schedule = await createScheduleService(id, profile_id, date);
 
-  return res.status(201).json(schedule);
+  return res.status(201).json(instanceToPlain(schedule));
 };
 
 export const listScheduleController = async (req: Request, res: Response) => {
-  const { id } = req.body;
+  const { profile_id } = req.user;
 
-  console.log(id, "1:o id recebido");
+  const schedules = await listScheduleService(profile_id);
 
-  const schedules = await listScheduleService(id);
-
-  return res.json(schedules);
+  return res.json(instanceToPlain(schedules));
 };
 
 export const deleteScheduleController = async (req: Request, res: Response) => {
   const { id } = req.params;
 
-  const schedule = await deleteScheduleService(id);
+  await deleteScheduleService(id);
 
-  return res.status(204).json({ message: "Schedule deleted" });
+  return res.status(204).send();
 };

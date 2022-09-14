@@ -19,9 +19,9 @@ export const profilesAddFavoritesController = async (
   const { profile_id } = req.user;
   const { id } = req.params;
 
-  const favorite = profilesAddFavoritesService(profile_id, id);
+  const favorites = await profilesAddFavoritesService(profile_id, id);
 
-  return res.status(201).json(favorite);
+  return res.status(201).json(favorites);
 };
 
 export const profilesListFavoritesController = async (
@@ -30,7 +30,7 @@ export const profilesListFavoritesController = async (
 ) => {
   const { profile_id } = req.user;
 
-  const list = profilesListFavoritesService(profile_id);
+  const list = await profilesListFavoritesService(profile_id);
 
   return res.status(200).json(list);
 };

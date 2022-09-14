@@ -14,9 +14,7 @@ const deleteScheduleService = async (id: string) => {
     throw new AppError("schedule not found", 404);
   }
 
-  scheduleRepository.delete(schedule);
-
-  return true;
+  await scheduleRepository.delete(schedule);
 };
 
 export default deleteScheduleService;

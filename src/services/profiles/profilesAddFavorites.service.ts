@@ -3,39 +3,49 @@ import { Activity } from "../../entities/activities.entity";
 import { Profile } from "../../entities/profiles.entity";
 import { AppError } from "../../errors/AppError";
 
-const profilesAddFavoritesService = async (profile_id: string, activity_id: string) => {
-    const profileRepo = AppDataSource.getRepository(Profile)
-    const activityRepo = AppDataSource.getRepository(Activity)
+const profilesAddFavoritesService = async (
+  profile_id: string,
+  activity_id: string
+) => {
+  const profileRepo = AppDataSource.getRepository(Profile);
+  const activityRepo = AppDataSource.getRepository(Activity);
 
-    const profiles = await profileRepo.find()
-    const activities = await activityRepo.find()
+  const profiles = await profileRepo.find();
+  const activities = await activityRepo.find();
 
-    const profile = profiles.find((prof) => prof.id === profile_id)
-    const findActivity = activities.find((act) => act.id === activity_id)
+  const profile = profiles.find((prof) => prof.id === profile_id);
+  const findActivity = activities.find((act) => act.id === activity_id);
 
-    if(!profile) {
-        throw new AppError("Profile not found", 404)
-    }
+  if (!profile) {
+    throw new AppError("Profile not found", 404);
+  }
 
-    if(!findActivity) {
-        throw new AppError("Activity not found", 404)
-    }
+  if (!findActivity) {
+    throw new AppError("Activity not found", 404);
+  }
 
-   const activity = profile.favorite_activities.find(act => act.id === activity_id)
- 
-    if(activity) {
-        profile.favorite_activities = profile.favorite_activities.filter((act) => {
-            return act.id !== activity.id
-        })
+  const activity = profile.favorite_activities.find(
+    (act) => act.id === activity_id
+  );
 
-        return {message: "Activity removed succesfully"}
-    }
-    else {
-        profile.favorite_activities = [...profile.favorite_activities, findActivity]
-        await profileRepo.save(profile)
+  if (activity) {
+    profile.favorite_activities = profile.favorite_activities.filter((act) => {
+      return act.id !== activity.id;
+    });
 
-        return {message: "Activity added succesfully"}
-    }
-}   
+    await profileRepo.save(profile);
 
-export default profilesAddFavoritesService
+    return profile.favorite_activities;
+  } else {
+    profile.favorite_activities = [
+      ...profile.favorite_activities,
+      findActivity,
+    ];
+
+    await profileRepo.save(profile);
+
+    return profile.favorite_activities;
+  }
+};
+
+export default profilesAddFavoritesService;

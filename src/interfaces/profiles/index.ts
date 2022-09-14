@@ -18,5 +18,5 @@ export interface IProfileSchema
 }
 
 export interface IUserScheduleRequest {
-  date: Date;
+  date: string;
 }

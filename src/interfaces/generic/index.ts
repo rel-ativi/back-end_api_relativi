@@ -1,27 +1,8 @@
-export class INameOnly {
+export interface INameOnly {
   name: string;
 }
 
-export class INameNumber {
+export interface INameNumber {
   name: string;
   number: number;
-}
-
-export class IScheduleRequest {
-  activityId: string;
-  userId: string;
-  date: string;
-  hour: string;
-}
-
-export class ISchedule {
-  activityId: string;
-  userId: string;
-  date: string;
-  hour: string;
-  id: string;
-}
-
-export class IIdOnly {
-  id: string;
 }
