@@ -1,5 +1,5 @@
 import { IBankInfo } from "../../interfaces/bank_info";
-import { INameNumber, INameOnly, IScheduleRequest } from "../../interfaces/generic";
+import { INameNumber, INameOnly } from "../../interfaces/generic";
 import { IPaymentInfo } from "../../interfaces/payment_info";
 import { IProfile, IUserScheduleRequest } from "../../interfaces/profiles";
 import { IUserRequest } from "../../interfaces/users";
@@ -47,18 +47,9 @@ export const updateProfile: IProfile = {
   phone: "99 99999-9999",
 };
 
-<<<<<<< HEAD
 export const createSchedules: IUserScheduleRequest = {
   date: "2022/09/09",
 };
-=======
-export const createSchedules: IScheduleRequest = {
-    date: "2022/09/09",
-    hour: "10:30",
-    activityId: "1",
-    userId: "1"
-}
->>>>>>> 0967d732d7129976fed3cf9534ebd0adb50a91dd
 
 export const createBank: IBankInfo = {
   bank: "Nu Bank",
@@ -83,8 +74,8 @@ export const updatePayment: IPaymentInfo = {
   card: "caminhão",
   card_name: "Mercedez",
   due_date: "10/02/2023",
-  sec_code: 1
-}
+  sec_code: 1,
+};
 
 export const createDistrict: INameOnly = {
   name: "Bairro Teste",
