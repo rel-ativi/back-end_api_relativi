@@ -1,9 +1,8 @@
 import { User } from "../../entities/users.entity";
 import AppDataSource from "../../data-source";
 import { AppError } from "../../errors/AppError";
-import { IUserCompleteResponse, IUserResponse } from "../../interfaces/users";
 
-const listUserService = async (id: string): Promise<IUserCompleteResponse> => {
+const listUserService = async (id: string): Promise<User> => {
   const userRepository = AppDataSource.getRepository(User);
 
   const user = await userRepository.findOneBy({
@@ -14,9 +13,7 @@ const listUserService = async (id: string): Promise<IUserCompleteResponse> => {
     throw new AppError("User not found", 404);
   }
 
-  const returnUser: IUserCompleteResponse = { ...user };
-  delete returnUser.password;
-  return returnUser;
+  return user;
 };
 
 export default listUserService;

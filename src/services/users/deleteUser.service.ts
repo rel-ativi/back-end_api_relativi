@@ -16,15 +16,15 @@ const deleteUserService = async (id: string): Promise<ISimpleResponse> => {
     if (user.is_active) {
       user.is_active = false;
     } else {
-      throw new AppError("bad request", 400);
+      throw new AppError("Bad request", 400);
     }
   } else {
-    throw new AppError("user not found", 404);
+    throw new AppError("User not found", 404);
   }
 
   await userRepository.save(user);
 
-  const response = { message: "user delete success" };
+  const response = { message: "User delete success" };
   return response;
 };
 

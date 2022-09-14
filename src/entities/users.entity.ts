@@ -1,47 +1,50 @@
 import { Exclude } from "class-transformer";
 import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    JoinColumn,
-    OneToOne,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 
 import { Profile } from "./profiles.entity";
 
 @Entity("users")
 export class User {
-    @PrimaryGeneratedColumn("uuid")
-    id: string;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-    @Column({ length: 128 })
-    name: string;
+  @Column({ length: 128 })
+  name: string;
 
-    @Column({ unique: true, length: 48 })
-    email: string;
+  @Column({ unique: true, length: 48 })
+  email: string;
 
-    @Column({ length: 128 })
-    @Exclude()
-    password: string;
+  @Column({ length: 128 })
+  @Exclude()
+  password: string;
 
-    @Column({ default: true })
-    is_active: boolean;
+  @Column({ default: true })
+  @Exclude()
+  is_active: boolean;
 
-    @Column({ default: false })
-    is_adm: boolean;
+  @Column({ default: false })
+  @Exclude()
+  is_adm: boolean;
 
-    @Column({ default: false })
-    is_pro_user: boolean;
+  @Column({ default: false })
+  @Exclude()
+  is_pro_user: boolean;
 
-    @CreateDateColumn()
-    createdAt: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-    @UpdateDateColumn()
-    updatedAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 
-    @OneToOne(() => Profile, { eager: true })
-    @JoinColumn()
-    profile: Profile;
+  @OneToOne(() => Profile, { eager: true })
+  @JoinColumn()
+  profile: Profile;
 }

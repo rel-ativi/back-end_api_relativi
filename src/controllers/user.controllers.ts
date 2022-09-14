@@ -1,11 +1,13 @@
+import { instanceToPlain } from "class-transformer";
 import { Request, Response } from "express";
 import { IUserRequest } from "../interfaces/users";
 import createUserService from "../services/users/createUser.service";
 import deleteUserService from "../services/users/deleteUser.service";
 import listUserService from "../services/users/listUser.service";
 import listUsersService from "../services/users/listUsers.service";
+import updateUserService from "../services/users/updateUser.service";
 
-const createUserController = async (req: Request, res: Response) => {
+export const createUserController = async (req: Request, res: Response) => {
   const { email, is_adm, name, password, is_pro_user }: IUserRequest = req.body;
   const user = await createUserService({
     email,
@@ -17,25 +19,24 @@ const createUserController = async (req: Request, res: Response) => {
   return res.status(201).json(user);
 };
 
-const listUsersController = async (req: Request, res: Response) => {
+export const listUsersController = async (req: Request, res: Response) => {
   const users = await listUsersService();
-  return res.json(users);
+  return res.json(instanceToPlain(users));
 };
 
-const listUserController = async (req: Request, res: Response) => {
+export const listUserController = async (req: Request, res: Response) => {
   const user = await listUserService(req.user.id);
-  return res.json(user);
+  return res.json(instanceToPlain(user));
 };
 
-const deleteUserController = async (req: Request, res: Response) => {
+export const deleteUserController = async (req: Request, res: Response) => {
   const { id } = req.params;
   const response = await deleteUserService(id);
-  return res.status(200).json(response);
+  return res.status(204);
 };
 
-export {
-  createUserController,
-  listUsersController,
-  deleteUserController,
-  listUserController,
+export const updateUserController = async (req: Request, res: Response) => {
+  const { name, email } = req.body;
+  const update = await updateUserService(name, email, req.user.id);
+  return res.status(200).json(update);
 };
