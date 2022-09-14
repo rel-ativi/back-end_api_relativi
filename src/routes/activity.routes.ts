@@ -63,12 +63,7 @@ export const activityRoutes = () => {
     proUserStatusMiddleware,
     listUserActivitiesController
   );
-  routes.get(
-    "/all",
-    authStatusMiddleware,
-    admStatusMiddleware,
-    listAllActivitiesController
-  );
+  routes.get("/all", authStatusMiddleware, listAllActivitiesController);
   routes.get(
     "/days",
     authStatusMiddleware,

@@ -85,20 +85,20 @@ describe("Testing day services", () => {
   });
 });
 
-describe("Testing activity services", () => {
-  let connection: DataSource;
+// describe("Testing activity services", () => {
+//   let connection: DataSource;
 
-  beforeAll(async () => {
-    await AppDataSource.initialize()
-      .then((res) => {
-        connection = res;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
+//   beforeAll(async () => {
+//     await AppDataSource.initialize()
+//       .then((res) => {
+//         connection = res;
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   });
 
-  afterAll(async () => {
-    await connection.destroy();
-  });
-});
+//   afterAll(async () => {
+//     await connection.destroy();
+//   });
+// });
