@@ -4,13 +4,10 @@ import { City } from "../../entities/cities.entity";
 import { AppError } from "../../errors/AppError";
 import { INameOnly } from "../../interfaces/generic";
 
-const createCityService = async ({
-  name,
-}: INameOnly): Promise<City> => {
+const createCityService = async ({ name }: INameOnly): Promise<City> => {
+  const citiesRepo = AppDataSource.getRepository(City);
 
-  const cityRepository = AppDataSource.getRepository(City);
-
-  const cities = await cityRepository.find();
+  const cities = await citiesRepo.find();
 
   const cityAlreadyExists = cities.find((cit) => cit.name === name);
 
@@ -21,9 +18,9 @@ const createCityService = async ({
   const city = new City();
   city.name = name;
 
-  cityRepository.create(cities);
+  citiesRepo.create(city);
 
-  await cityRepository.save(cities);
+  await citiesRepo.save(city);
 
   return city;
 };

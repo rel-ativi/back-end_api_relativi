@@ -37,7 +37,7 @@ const updateBankService = async (
     account_number: account_number || updateBank.agency,
   });
 
-  const updated = await banksRepo.findOneBy({ id });
+  const updated = await banksRepo.findOneBy({ id: updateBank.id });
 
   return updated!;
 };

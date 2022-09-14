@@ -35,8 +35,8 @@ export class Activity {
   @Column({ type: "integer" })
   max_users: number;
 
-  @Column({ type: "decimal", precision: 2, scale: 2 })
-  duration: number;
+  @Column({ length: 4 })
+  duration: string;
 
   @Column({ default: true })
   is_active: boolean;
@@ -46,6 +46,9 @@ export class Activity {
 
   @Column({ type: "date" })
   starting_date: string;
+
+  @Column({ nullable: true })
+  image_url: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -62,12 +65,12 @@ export class Activity {
 
   @OneToOne(() => Address, (address) => address.address_of, {
     eager: true,
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
   })
   @JoinColumn()
   address: Address;
 
-  @OneToOne(() => ActivitySchedule, { eager: true, onDelete: "CASCADE" })
+  @OneToOne(() => ActivitySchedule, { eager: true, onDelete: "SET NULL" })
   @JoinColumn()
   activity_schedule: ActivitySchedule;
 

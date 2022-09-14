@@ -43,9 +43,7 @@ export const createActivityScheduleController = async (
     ...activityScheduleData,
   });
 
-  if (schedule) {
-    return res.status(201).json({ message: "Schedule created" });
-  }
+  return res.status(201).json(schedule);
 };
 
 export const createDayController = async (req: Request, res: Response) => {
@@ -106,7 +104,7 @@ export const updateActivityController = async (req: Request, res: Response) => {
   return res.json(updated);
 };
 
-export const updateActivityScheduelController = async (
+export const updateActivityScheduleController = async (
   req: Request,
   res: Response
 ) => {

@@ -40,7 +40,7 @@ const updatePaymentService = async (
     sec_code: sec_code || updatePayment.sec_code,
   });
 
-  const updated = await paymentsRepo.findOneBy({ id });
+  const updated = await paymentsRepo.findOneBy({ id: updatePayment.id });
 
   return updated!;
 };

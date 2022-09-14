@@ -10,15 +10,13 @@ export interface IActivityRequest {
   price: number;
   min_users?: number;
   max_users: number;
-  duration: number;
+  duration: string;
   category_id: string;
   recurrent: boolean;
   starting_date: string;
   address: IAddressRequest;
   activity_schedule_id?: string;
-  image?: string;
+  image_url?: string;
 }
 
-export type IActivitySchema = Omit<IActivityRequest, "image">;
-
-export type ActivityUpdate = Omit<IActivityRequest, "address" | "image">;
+export type ActivityUpdate = Omit<IActivityRequest, "address">;

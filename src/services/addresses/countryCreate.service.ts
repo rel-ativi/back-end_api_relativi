@@ -4,8 +4,7 @@ import { Country } from "../../entities/countries.entity";
 import { AppError } from "../../errors/AppError";
 import { INameOnly } from "../../interfaces/generic";
 
-const createCountryService = async ({name,}: INameOnly): Promise<Country> => {
-
+const createCountryService = async ({ name }: INameOnly): Promise<Country> => {
   const countryRepository = AppDataSource.getRepository(Country);
 
   const countries = await countryRepository.find();
@@ -19,9 +18,9 @@ const createCountryService = async ({name,}: INameOnly): Promise<Country> => {
   const country = new Country();
   country.name = name;
 
-  countryRepository.create(countries);
+  countryRepository.create(country);
 
-  await countryRepository.save(countries);
+  await countryRepository.save(country);
 
   return country;
 };

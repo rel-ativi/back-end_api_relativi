@@ -45,27 +45,37 @@ const addressesUpdateService = async (
     where: { id: profile_id },
   });
 
+  if (!profile) {
+    throw new AppError("Profile not found", 404);
+  }
+
   if (!toUpdate) {
     throw new AppError("Address not found", 404);
   }
 
-  if (!district) {
+  if (!!district && !district) {
     throw new AppError("District not found", 404);
   }
 
-  if (!city) {
+  if (!!city_id && !city) {
     throw new AppError("City not found", 404);
   }
 
-  if (!state) {
+  if (!!state_id && !state) {
     throw new AppError("State not found", 404);
   }
 
-  if (!country) {
+  if (!!country_id && !country) {
     throw new AppError("Country not found", 404);
   }
 
-  if (!(toUpdate.created_by === profile!) && !is_adm) {
+  let is_owner = false;
+
+  profile.addresses.forEach((add) => {
+    if (add.id === toUpdate.id) is_owner = true;
+  });
+
+  if (!is_owner && !is_adm) {
     throw new AppError("Access denied", 403);
   }
 

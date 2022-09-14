@@ -32,16 +32,16 @@ export class Address {
   @Exclude()
   created_by: Profile;
 
-  @ManyToOne(() => District, { eager: true })
+  @ManyToOne(() => District, { eager: true, onDelete: "SET NULL" })
   district: District;
 
-  @ManyToOne(() => City, { eager: true })
+  @ManyToOne(() => City, { eager: true, onDelete: "SET NULL" })
   city: City;
 
-  @ManyToOne(() => State, { eager: true })
+  @ManyToOne(() => State, { eager: true, onDelete: "SET NULL" })
   state: State;
 
-  @ManyToOne(() => Country, { eager: true })
+  @ManyToOne(() => Country, { eager: true, onDelete: "SET NULL" })
   country: Country;
 
   @OneToOne(() => Activity || Profile, (entity) => entity.address)

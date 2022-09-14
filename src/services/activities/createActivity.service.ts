@@ -79,6 +79,14 @@ const createActivityService = async (
   const addresses = await addressRepo.find();
   const schedules = await activityScheduleRepo.find();
 
+  const activityAlreadyExists = profile.activities.find(
+    (act) => act.name === name
+  );
+
+  if (activityAlreadyExists) {
+    throw new AppError("Activity name already used");
+  }
+
   const addressAlreadyExists = addresses.find(
     (adrs) => adrs.street === address.street && adrs.number === address.number
   );

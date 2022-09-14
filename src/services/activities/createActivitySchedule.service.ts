@@ -9,7 +9,7 @@ import { IActivitySchedule } from "../../interfaces/activities";
 const createActivityScheduleService = async (
   activity_id: string,
   { time, days }: IActivitySchedule
-): Promise<boolean> => {
+): Promise<ActivitySchedule> => {
   const activityRepo = AppDataSource.getRepository(Activity);
   const activityScheduleRepo = AppDataSource.getRepository(ActivitySchedule);
   const daysRepo = AppDataSource.getRepository(Day);
@@ -42,13 +42,17 @@ const createActivityScheduleService = async (
   }
 
   const activity_schedule = new ActivitySchedule();
-  activity_schedule.hour = hour;
+  activity_schedule.hour = time;
   activity_schedule.days = [...daysArray];
 
   activityScheduleRepo.create(activity_schedule);
   await activityScheduleRepo.save(activity_schedule);
 
-  return true;
+  await activityRepo.update(activity_id, {
+    activity_schedule: activity_schedule,
+  });
+
+  return activity_schedule;
 };
 
 export default createActivityScheduleService;

@@ -44,7 +44,7 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToOne(() => Profile, { eager: true, onDelete: "CASCADE" })
+  @OneToOne(() => Profile, { eager: true })
   @JoinColumn()
   profile: Profile;
 }

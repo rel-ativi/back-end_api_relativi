@@ -22,7 +22,7 @@ const addressesCreateService = async (
     country_id,
   }: IAddressRequest
 ) => {
-  const adressessRepo = AppDataSource.getRepository(Address);
+  const adressesRepo = AppDataSource.getRepository(Address);
   const districtsRepo = AppDataSource.getRepository(District);
   const citiesRepo = AppDataSource.getRepository(City);
   const statesRepo = AppDataSource.getRepository(State);
@@ -68,8 +68,14 @@ const addressesCreateService = async (
   address.country = country;
   address.created_by = profile!;
 
-  adressessRepo.create(address);
-  await adressessRepo.save(address);
+  console.log(address);
+
+  adressesRepo.create(address);
+  await adressesRepo.save(address);
+
+  await profilesRepo.update(profile_id, {
+    address: address,
+  });
 
   return address;
 };

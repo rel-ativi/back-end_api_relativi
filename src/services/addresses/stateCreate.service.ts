@@ -1,11 +1,10 @@
 import AppDataSource from "../../data-source";
 
-import { State } from "../../entities/states.entity"; 
+import { State } from "../../entities/states.entity";
 import { AppError } from "../../errors/AppError";
 import { INameOnly } from "../../interfaces/generic";
 
-const createStateService = async ({ name,}: INameOnly): Promise<State> => {
-
+const createStateService = async ({ name }: INameOnly): Promise<State> => {
   const stateRepository = AppDataSource.getRepository(State);
 
   const states = await stateRepository.find();
@@ -19,9 +18,9 @@ const createStateService = async ({ name,}: INameOnly): Promise<State> => {
   const state = new State();
   state.name = name;
 
-  stateRepository.create(states);
+  stateRepository.create(state);
 
-  await stateRepository.save(states);
+  await stateRepository.save(state);
 
   return state;
 };

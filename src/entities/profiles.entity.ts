@@ -31,7 +31,7 @@ export class Profile {
   @OneToOne(() => Address, (address) => address.address_of, {
     eager: true,
     nullable: true,
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
   })
   @JoinColumn()
   address: Address;
@@ -39,7 +39,7 @@ export class Profile {
   @OneToOne(() => BankInfo, {
     eager: true,
     nullable: true,
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
   })
   @JoinColumn()
   bank_info: BankInfo;
@@ -47,7 +47,7 @@ export class Profile {
   @OneToOne(() => PaymentInfo, {
     eager: true,
     nullable: true,
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
   })
   @JoinColumn()
   payment_info: PaymentInfo;
@@ -55,41 +55,35 @@ export class Profile {
   @OneToMany(() => Activity, (activities) => activities.created_by, {
     eager: true,
     nullable: true,
-    onDelete: "CASCADE",
   })
   activities: Activity[];
 
   @OneToMany(() => Address, (addresses) => addresses.created_by, {
     eager: true,
     nullable: true,
-    onDelete: "CASCADE",
   })
-  adresses: Address[];
+  addresses: Address[];
 
   @OneToMany(() => Certification, (certifications) => certifications.profile, {
     eager: true,
     nullable: true,
-    onDelete: "CASCADE",
   })
   certifications: Certification[];
 
   @OneToMany(() => UserSchedule, (schedule) => schedule.profile, {
     eager: true,
     nullable: true,
-    onDelete: "CASCADE",
   })
   scheduled_activities: UserSchedule[];
 
   @OneToMany(() => ActivityHistory, (schedule) => schedule.profile, {
     eager: true,
-    onDelete: "CASCADE",
   })
   activity_history: ActivityHistory[];
 
   @ManyToMany(() => Activity, {
     eager: true,
     nullable: true,
-    onDelete: "CASCADE",
   })
   @JoinTable()
   favorite_activities: Activity[];

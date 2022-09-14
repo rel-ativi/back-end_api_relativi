@@ -14,7 +14,7 @@ import {
   listDaysController,
   listUserActivitiesController,
   updateActivityController,
-  updateActivityScheduelController,
+  updateActivityScheduleController,
 } from "../controllers/activity.controllers";
 import { admStatusMiddleware } from "../middlewares/admStatus.middleware";
 import { authStatusMiddleware } from "../middlewares/authStatus.middleware";
@@ -88,10 +88,10 @@ export const activityRoutes = () => {
     updateActivityController
   );
   routes.patch(
-    ":id/schedule/", // activity id
+    "/schedule/:id", // activity id
     authStatusMiddleware,
     proUserStatusMiddleware,
-    updateActivityScheduelController
+    updateActivityScheduleController
   );
   routes.delete(
     "/:id", // activity id

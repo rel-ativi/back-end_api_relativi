@@ -25,10 +25,6 @@ const deleteBankService = async (id: string) => {
     throw new AppError("User does not have a bank");
   }
 
-  await profilesRepo.update(id, {
-    bank_info: { id: undefined },
-  });
-
   const bankRepository = AppDataSource.getRepository(BankInfo);
 
   const banks = await bankRepository.find();

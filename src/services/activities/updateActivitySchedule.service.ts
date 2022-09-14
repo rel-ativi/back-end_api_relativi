@@ -24,35 +24,50 @@ const updateActivityScheduleService = async (
   }
 
   const id = activity.activity_schedule.id;
+  console.log(id);
 
   const schedule = schedules.find((sch) => sch.id === id);
 
   if (!schedule) {
     throw new AppError("Activity schedule not found", 404);
   }
-
   const daysArray: Day[] = [];
 
-  days.forEach((day) => {
-    const aDay = allDays.find((d) => d.id === day);
+  let hour, minutes;
 
-    if (!aDay) {
-      throw new AppError("Day not found", 404);
+  if (!!time) {
+    hour = time.split(":")[0];
+    minutes = time.split(":")[1];
+
+    if (+hour < 6 || (+hour >= 22 && +minutes > 0)) {
+      throw new AppError("Invalid starting time");
     }
-
-    daysArray.push(aDay);
-  });
-
-  const [hour, minutes] = time.split(":");
-
-  if (+hour < 6 || (+hour >= 22 && +minutes > 0)) {
-    throw new AppError("Invalid starting time");
   }
 
   await activityScheduleRepo.update(id, {
-    hour: hour || schedule.hour,
-    days: daysArray.length > 0 ? [...daysArray] : schedule.days,
+    hour: time || schedule.hour,
   });
+
+  if (!!days) {
+    days.forEach((day) => {
+      const aDay = allDays.find((d) => d.id === day);
+
+      if (!aDay) {
+        throw new AppError("Day not found", 404);
+      }
+
+      daysArray.push(aDay);
+    });
+
+    schedule.days = schedule.days.filter((d) => d.id === "");
+    await AppDataSource.manager.save(schedule);
+
+    console.log(daysArray);
+    schedule.days = [...daysArray];
+    await AppDataSource.manager.save(schedule);
+
+    console.log(schedule);
+  }
 
   const updated = await activityScheduleRepo.findOneBy({
     id,

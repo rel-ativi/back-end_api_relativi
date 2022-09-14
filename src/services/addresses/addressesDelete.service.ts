@@ -19,25 +19,31 @@ const addressesDeleteService = async (
     where: { id: profile_id },
   });
 
+  if (!profile) {
+    throw new AppError("Profile not found", 404);
+  }
+
   if (!deleteAddress) {
     throw new AppError("Address does not exist", 404);
   }
 
-  if (!(deleteAddress.created_by === profile!) && !is_adm) {
+  let is_owner = false;
+
+  profile.addresses.forEach((add) => {
+    if (add.id === deleteAddress.id) is_owner = true;
+  });
+
+  if (!is_owner && !is_adm) {
     throw new AppError("Access denied", 403);
   }
 
-  const parent = deleteAddress.address_of;
+  if (profile.address.id === deleteAddress.id) {
+    await profilesRepo.update(profile_id, {
+      address: { id: undefined },
+    });
 
-  if (!(parent instanceof Profile)) {
-    throw new AppError("Can not delete activity address", 400);
+    await addressesRepo.delete(deleteAddress);
   }
-
-  await profilesRepo.update(id, {
-    address: { id: undefined },
-  });
-
-  await addressesRepo.delete(deleteAddress);
 };
 
 export default addressesDeleteService;

@@ -6,7 +6,7 @@ import { AppError } from "../../errors/AppError";
 
 const deletePaymentService = async (id: string) => {
   if (!id) {
-    throw new AppError("access denied", 404);
+    throw new AppError("Access denied", 404);
   }
 
   const profilesRepo = AppDataSource.getRepository(Profile);
@@ -22,7 +22,7 @@ const deletePaymentService = async (id: string) => {
   const findPayment = profile!.payment_info.id;
 
   if (!findPayment) {
-    throw new AppError("User does not have a payment method");
+    throw new AppError("Payment method not found", 404);
   }
 
   const paymentsRepo = AppDataSource.getRepository(PaymentInfo);
@@ -30,8 +30,6 @@ const deletePaymentService = async (id: string) => {
   const payments = await paymentsRepo.find();
 
   const payment = payments.find((pay) => pay.id === findPayment);
-
-  console.log(payment!.id);
 
   await paymentsRepo.delete(payment!.id);
 };
