@@ -1,4 +1,5 @@
 import { IBankInfo } from "../../interfaces/bank_info"
+import { IScheduleRequest } from "../../interfaces/generic"
 import { IPaymentInfo } from "../../interfaces/payment_info"
 import { IProfile, IUserScheduleRequest } from "../../interfaces/profiles"
 import { IUserRequest } from "../../interfaces/users"
@@ -47,8 +48,12 @@ export const updateProfile: IProfile = {
     phone: "99 99999-9999",
 }
 
-export const createSchedules: IUserScheduleRequest = {
-    date: new Date("2022/09/09")
+export const createSchedules: IScheduleRequest = {
+    date: "2022/09/09",
+    hour: "10:30",
+    activityId: "1",
+    userId: "1"
+
 }
 
 export const createBank: IBankInfo = {
