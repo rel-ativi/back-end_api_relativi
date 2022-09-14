@@ -1,0 +1,22 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.appRoutes = void 0;
+const activity_routes_1 = require("./activity.routes");
+const address_routes_1 = require("./address.routes");
+const bankInfo_routes_1 = require("./bankInfo.routes");
+const paymentInfo_routes_1 = require("./paymentInfo.routes");
+const profile_routes_1 = require("./profile.routes");
+const root_routes_1 = require("./root.routes");
+const session_routes_1 = require("./session.routes");
+const user_routes_1 = require("./user.routes");
+const appRoutes = (app) => {
+    app.use("/", (0, root_routes_1.rootRoutes)());
+    app.use("/login", (0, session_routes_1.sessionRoutes)());
+    app.use("/users", (0, user_routes_1.userRoutes)());
+    app.use("/profile", (0, profile_routes_1.profileRoutes)());
+    app.use("/bank_info", (0, bankInfo_routes_1.bankInfoRoutes)());
+    app.use("/payment_info", (0, paymentInfo_routes_1.paymentInfoRoutes)());
+    app.use("/activities", (0, activity_routes_1.activityRoutes)());
+    app.use("/addresses", (0, address_routes_1.addressRoutes)());
+};
+exports.appRoutes = appRoutes;
