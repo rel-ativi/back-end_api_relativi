@@ -53,7 +53,6 @@ export const createSchedules: IScheduleRequest = {
     hour: "10:30",
     activityId: "1",
     userId: "1"
-
 }
 
 export const createBank: IBankInfo = {
@@ -73,4 +72,11 @@ export const createPayment: IPaymentInfo = {
     card_name: "BMW",
     due_date: "20/12/2022",
     sec_code: 12
+}
+
+export const updatePayment: IPaymentInfo = {
+    card: "caminhão",
+    card_name: "Mercedez",
+    due_date: "10/02/2023",
+    sec_code: 1
 }
