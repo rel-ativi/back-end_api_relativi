@@ -8,14 +8,9 @@ import listUsersService from "../services/users/listUsers.service";
 import updateUserService from "../services/users/updateUser.service";
 
 export const createUserController = async (req: Request, res: Response) => {
-  const { email, is_adm, name, password, is_pro_user }: IUserRequest = req.body;
-  const user = await createUserService({
-    email,
-    is_adm,
-    name,
-    password,
-    is_pro_user,
-  });
+  const userData: IUserRequest = req.body;
+  const user = await createUserService({ ...userData });
+
   return res.status(201).json(user);
 };
 
@@ -31,7 +26,8 @@ export const listUserController = async (req: Request, res: Response) => {
 
 export const deleteUserController = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const response = await deleteUserService(id);
+
+  await deleteUserService(id);
 
   return res.status(204).send();
 };

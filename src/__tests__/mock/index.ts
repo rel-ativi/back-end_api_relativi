@@ -78,7 +78,44 @@ export const updatePayment: IPaymentInfo = {
 };
 
 export const createDistrict: INameOnly = {
-  name: "Bairro Teste",
+  name: "Bairro teste create",
+};
+
+export const deleteDistrict: INameOnly = {
+  name: "Bairro teste delete",
+};
+export const createCity: INameOnly = {
+  name: "Cidade teste create",
+};
+
+export const deleteCity: INameOnly = {
+  name: "Cidade teste delete",
+};
+export const createState: INameOnly = {
+  name: "Estado teste create",
+};
+
+export const deleteState: INameOnly = {
+  name: "Estado teste delete",
+};
+export const createCountry: INameOnly = {
+  name: "País teste create",
+};
+
+export const deleteCountry: INameOnly = {
+  name: "País teste delete",
+};
+
+export const createAddress = {
+  street: "Rua teste",
+  number: "1230",
+  zip_code: "11223344",
+};
+
+export const updateAddress = {
+  street: "Update street",
+  number: "1312",
+  zip_code: "12312312",
 };
 
 export const createCategory: INameOnly = {
