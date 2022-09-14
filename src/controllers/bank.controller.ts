@@ -7,37 +7,29 @@ import { IBankInfo } from "../interfaces/bank_info";
 import { IBankInfoUpdate } from "../interfaces/bank_info";
 
 export const createBankController = async (req: Request, res: Response) => {
-  const { bank, agency, account_number }: IBankInfo = req.body;
+  const bankData: IBankInfo = req.body;
 
   const { profile_id } = req.user;
 
-  const newBank = await createBankService(profile_id, {
-    bank,
-    agency,
-    account_number,
-  });
+  const newBank = await createBankService(profile_id, { ...bankData });
 
   return res.status(201).json(newBank);
 };
 
 export const updateBankController = async (req: Request, res: Response) => {
-  const { bank, agency, account_number }: IBankInfoUpdate = req.body;
+  const bankData: IBankInfoUpdate = req.body;
 
   const { profile_id } = req.user;
 
-  const updateBank = await updateBankService(profile_id, {
-    bank,
-    agency,
-    account_number,
-  });
+  const updateBank = await updateBankService(profile_id, { ...bankData });
 
-  return res.status(200).json({ message: "Bank updated" });
+  return res.status(200).json(updateBank);
 };
 
 export const deleteBankController = async (req: Request, res: Response) => {
   const { profile_id } = req.user;
 
-  const deleteBank = await deleteBankService(profile_id);
+  await deleteBankService(profile_id);
 
-  return res.status(204).json({ message: "Bank deleted!" });
+  return res.status(204).send();
 };

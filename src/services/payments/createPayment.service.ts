@@ -30,12 +30,16 @@ const createPaymentService = async (
   const strCardNumber = card.toString();
 
   if (strSecCode.length > 3 || strSecCode.length < 3) {
-    throw new AppError("invalid code");
+    throw new AppError("Invalid code");
   }
 
   if (strCardNumber.length < 16 || strCardNumber.length > 16) {
     throw new AppError("Invalid card");
   }
+
+  const aDate = new Date(due_date);
+
+  console.log(aDate);
 
   const payment = new PaymentInfo();
 

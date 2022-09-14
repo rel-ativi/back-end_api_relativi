@@ -1,7 +1,8 @@
+import AppDataSource from "../../data-source";
+
 import { BankInfo } from "../../entities/bank_info.entity";
 import { Profile } from "../../entities/profiles.entity";
 import { AppError } from "../../errors/AppError";
-import AppDataSource from "../../data-source";
 import { IBankInfo } from "../../interfaces/bank_info";
 
 const createBankService = async (
@@ -12,9 +13,9 @@ const createBankService = async (
     throw new AppError("access denied", 404);
   }
 
-  const profileRepository = AppDataSource.getRepository(Profile);
+  const profilesRepo = AppDataSource.getRepository(Profile);
 
-  const profiles = await profileRepository.find();
+  const profiles = await profilesRepo.find();
 
   const profile = profiles.find((prof) => prof.id === id);
 
@@ -26,9 +27,7 @@ const createBankService = async (
     throw new AppError("user already has a bank");
   }
 
-  const bankRepository = AppDataSource.getRepository(BankInfo);
-
-  const banks = await bankRepository.find();
+  const banksRepo = AppDataSource.getRepository(BankInfo);
 
   const newBank = new BankInfo();
 
@@ -36,10 +35,10 @@ const createBankService = async (
   newBank.agency = agency;
   newBank.bank = bank;
 
-  bankRepository.create(newBank);
-  await bankRepository.save(newBank);
+  banksRepo.create(newBank);
+  await banksRepo.save(newBank);
 
-  profileRepository.update(profile!.id, { bank_info: newBank });
+  profilesRepo.update(profile!.id, { bank_info: newBank });
 
   return newBank;
 };

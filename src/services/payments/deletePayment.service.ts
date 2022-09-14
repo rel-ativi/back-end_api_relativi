@@ -1,40 +1,39 @@
+import AppDataSource from "../../data-source";
+
 import { PaymentInfo } from "../../entities/payment_info.entity";
 import { Profile } from "../../entities/profiles.entity";
 import { AppError } from "../../errors/AppError";
-import AppDataSource from "../../data-source";
 
 const deletePaymentService = async (id: string) => {
   if (!id) {
     throw new AppError("access denied", 404);
   }
 
-  const profileRepository = AppDataSource.getRepository(Profile);
+  const profilesRepo = AppDataSource.getRepository(Profile);
 
-  const profiles = await profileRepository.find();
+  const profiles = await profilesRepo.find();
 
   const profile = profiles.find((prof) => prof.id === id);
 
   if (!profile) {
-    throw new AppError("user not found", 404);
+    throw new AppError("User not found", 404);
   }
 
   const findPayment = profile!.payment_info.id;
 
   if (!findPayment) {
-    throw new AppError("user does not have a payment method");
+    throw new AppError("User does not have a payment method");
   }
 
-  const paymentRepository = AppDataSource.getRepository(PaymentInfo);
+  const paymentsRepo = AppDataSource.getRepository(PaymentInfo);
 
-  const payments = await paymentRepository.find();
+  const payments = await paymentsRepo.find();
 
   const payment = payments.find((pay) => pay.id === findPayment);
 
   console.log(payment!.id);
 
-  await paymentRepository.delete(payment!.id);
-
-  return true;
+  await paymentsRepo.delete(payment!.id);
 };
 
 export default deletePaymentService;

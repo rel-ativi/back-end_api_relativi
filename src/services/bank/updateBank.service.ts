@@ -8,42 +8,38 @@ const updateBankService = async (
   { bank, agency, account_number }: IBankInfoUpdate
 ) => {
   if (!id) {
-    throw new AppError("access denied", 404);
+    throw new AppError("Access denied", 403);
   }
 
-  const profileRepository = AppDataSource.getRepository(Profile);
+  const profilesRepo = AppDataSource.getRepository(Profile);
 
-  const profiles = await profileRepository.find();
+  const profiles = await profilesRepo.find();
 
   const profile = profiles.find((prof) => prof.id === id);
 
   if (!profile) {
-    throw new AppError("log into your account to make changes");
+    throw new AppError("Access denied", 403);
   }
 
-  if (!profile.bank_info) {
-    throw new AppError("no registered bank!");
+  const banksRepo = AppDataSource.getRepository(BankInfo);
+
+  const banks = await banksRepo.find();
+
+  const updateBank = banks.find((ban) => ban.id === profile.bank_info.id);
+
+  if (!updateBank) {
+    throw new AppError("No bank found", 404);
   }
 
-  const bankRepository = AppDataSource.getRepository(BankInfo);
-
-  const banks = await bankRepository.find();
-
-  const updateBank = banks.find((bk) => bk.id === profile!.bank_info.id);
-
-  bank ? (updateBank!.bank = bank) : updateBank!.bank;
-  agency ? (updateBank!.agency = agency) : updateBank!.agency;
-  account_number
-    ? (updateBank!.account_number = account_number)
-    : updateBank!.account_number;
-
-  await bankRepository.update(updateBank!.id, {
-    bank: bank,
-    agency: agency,
-    account_number: account_number,
+  await banksRepo.update(updateBank.id, {
+    bank: bank || updateBank.bank,
+    agency: agency || updateBank.agency,
+    account_number: account_number || updateBank.agency,
   });
 
-  return true;
+  const updated = await banksRepo.findOneBy({ id });
+
+  return updated!;
 };
 
 export default updateBankService;
