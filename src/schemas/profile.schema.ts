@@ -14,5 +14,5 @@ export const profileSchema: SchemaOf<IProfileSchema> = yup.object().shape({
 export const userScheduleSchema: SchemaOf<IUserScheduleRequest> = yup
   .object()
   .shape({
-    date: yup.date().required(),
+    date: yup.string().required(),
   });

@@ -48,7 +48,7 @@ export const updateProfile: IProfile = {
 };
 
 export const createSchedules: IUserScheduleRequest = {
-  date: new Date("2022/09/09"),
+  date: "2022/09/09",
 };
 
 export const createBank: IBankInfo = {

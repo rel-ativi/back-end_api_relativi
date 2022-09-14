@@ -1,37 +1,34 @@
-import { DataSource } from "typeorm"
-import AppDataSource from "../../../data-source"
-import createUserService from "../../../services/users/createUser.service"
-import listUsersService from "../../../services/users/listUsers.service"
-import { userCreate, userCreateNotAdm } from "../../mock"
-
+import { DataSource } from "typeorm";
+import AppDataSource from "../../../data-source";
+import createUserService from "../../../services/users/createUser.service";
+import listUsersService from "../../../services/users/listUsers.service";
+import { userCreate, userCreateNotAdm } from "../../mock";
 
 describe("Delete a user test unit", () => {
-    
-    let connection: DataSource
+  let connection: DataSource;
 
-    beforeAll(async () => {
+  beforeAll(async () => {
+    await AppDataSource.initialize()
+      .then((res) => (connection = res))
+      .catch((err) =>
+        console.error("Error during Data Source initialization", err)
+      );
+  });
 
-        await AppDataSource.initialize()
-        .then(res => connection = res)
-        .catch(err => console.error("Error during Data Source initialization", err))
-    })
+  afterAll(async () => await connection.destroy());
 
-    afterAll(async () => await connection.destroy())
+  test("Must be able to soft delete user", async () => {
+    const result = await createUserService(userCreate);
 
-    test("Must be able to soft delete user", async () => {
+    const findUser = await listUsersService();
 
-        const result = await createUserService(userCreate)
+    // expect(findUser[0].body.is_active).toBe(false)
+    expect(result).toHaveProperty("message");
+  });
 
-        const findUser = await listUsersService()
+  test("Should not be able to delete user not being admin", async () => {
+    const result = await createUserService(userCreateNotAdm);
 
-        expect(findUser[0].body.is_active).toBe(false)
-        expect(result).toHaveProperty("message")
-    })
-
-    test("Should not be able to delete user not being admin", async () => {
-
-        const result = await createUserService(userCreateNotAdm)
-
-        expect(result).toHaveProperty("message")
-    })
-})
+    expect(result).toHaveProperty("message");
+  });
+});
