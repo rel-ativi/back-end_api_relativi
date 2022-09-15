@@ -10,7 +10,6 @@ import { sessionRoutes } from "./session.routes";
 import { userRoutes } from "./user.routes";
 
 export const appRoutes = (app: Express) => {
-  app.use("/", rootRoutes());
   app.use("/login", sessionRoutes());
   app.use("/users", userRoutes());
   app.use("/profile", profileRoutes());
