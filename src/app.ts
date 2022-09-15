@@ -12,4 +12,6 @@ app.use(express.json());
 appRoutes(app);
 app.use(handleErrorMiddleware);
 
+app.use("/", express.static(__dirname + "/docs"));
+
 export default app;
