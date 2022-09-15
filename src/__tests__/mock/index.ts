@@ -145,3 +145,28 @@ export const deleteDay: INameNumber = {
   name: "Sábado",
   number: 6,
 };
+
+export const createActivity = {
+  name: "Karate",
+  price: 50.97,
+  max_users: 7,
+  duration: "1 H",
+  recurrent: true,
+  starting_date: "10/01/2022",
+};
+
+export const updateActivity = {
+  name: "Personal",
+  max_users: 4,
+};
+
+export const createSchedule = {
+  time: "19:30",
+};
+export const updateSchedule = {
+  time: "13:45",
+};
+
+export const createScheduleWrongTime = {
+  time: "22:30",
+};

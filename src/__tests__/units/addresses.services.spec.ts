@@ -30,6 +30,7 @@ import {
   userCreate,
 } from "../mock";
 import addressesUpdateService from "../../services/addresses/addressesUpdate.service";
+import addressesDeleteService from "../../services/addresses/addressesDelete.service";
 
 describe("Testing District services", () => {
   let connection: DataSource;
@@ -227,7 +228,7 @@ describe("Testing Country services", () => {
   });
 });
 
-describe("Testing Address services", async () => {
+describe("Testing Address services", () => {
   let connection: DataSource;
 
   beforeAll(async () => {
@@ -244,16 +245,14 @@ describe("Testing Address services", async () => {
     await connection.destroy();
   });
 
-  const user = await createUserService(userCreate);
-  const profile_id = user.profile.id;
-  const is_adm = user.is_adm;
-
-  const district = await createDistrictService(createDistrict);
-  const city = await createCityService(createCity);
-  const state = await createStateService(createState);
-  const country = await createCountryService(createCountry);
-
   it("Should not be able to create an address with missing data", async () => {
+    const user = await createUserService(userCreate);
+    const profile_id = user.profile.id;
+
+    const city = await createCityService(createCity);
+    const state = await createStateService(createState);
+    const country = await createCountryService(createCountry);
+
     const requestData: IAddressRequest = {
       ...createAddress,
       district_id: "",
@@ -268,6 +267,19 @@ describe("Testing Address services", async () => {
   });
 
   it("Should be able to create an address", async () => {
+    userCreate.email = "example@mail.com";
+    const user = await createUserService(userCreate);
+    const profile_id = user.profile.id;
+
+    createCity.name = createCity.name + "0";
+    createState.name = createState.name + "0";
+    createCountry.name = createCountry.name + "0";
+
+    const district = await createDistrictService(createDistrict);
+    const city = await createCityService(createCity);
+    const state = await createStateService(createState);
+    const country = await createCountryService(createCountry);
+
     const requestData: IAddressRequest = {
       ...createAddress,
       district_id: district.id,
@@ -288,6 +300,21 @@ describe("Testing Address services", async () => {
   });
 
   it("Should be able to update an address", async () => {
+    userCreate.email = "email@test.com";
+    const user = await createUserService(userCreate);
+    const profile_id = user.profile.id;
+    const is_adm = user.is_adm;
+
+    createDistrict.name = createDistrict.name + "1";
+    createCity.name = createCity.name + "1";
+    createState.name = createState.name + "1";
+    createCountry.name = createCountry.name + "1";
+
+    const district = await createDistrictService(createDistrict);
+    const city = await createCityService(createCity);
+    const state = await createStateService(createState);
+    const country = await createCountryService(createCountry);
+
     const requestData: IAddressRequest = {
       ...createAddress,
       district_id: district.id,
@@ -318,5 +345,38 @@ describe("Testing Address services", async () => {
     expect(updated.street).toBe(updateData.street);
     expect(updated.number).toBe(updateData.number);
     expect(updated.zip_code).toBe(updateData.zip_code);
+  });
+
+  it("Should be able to delete an address", async () => {
+    userCreate.email = "test@mail.com";
+    const user = await createUserService(userCreate);
+    const profile_id = user.profile.id;
+    const is_adm = user.is_adm;
+
+    createDistrict.name = createDistrict.name + "2";
+    createCity.name = createCity.name + "2";
+    createState.name = createState.name + "2";
+    createCountry.name = createCountry.name + "2";
+
+    const district = await createDistrictService(createDistrict);
+    const city = await createCityService(createCity);
+    const state = await createStateService(createState);
+    const country = await createCountryService(createCountry);
+
+    const requestData: IAddressRequest = {
+      ...createAddress,
+      district_id: district.id,
+      city_id: city.id,
+      state_id: state.id,
+      country_id: country.id,
+    };
+
+    const address = await addressesCreateService(profile_id, requestData);
+
+    const id = address.id;
+
+    const result = await addressesDeleteService(id, profile_id, is_adm);
+
+    expect(result).toBe(undefined);
   });
 });

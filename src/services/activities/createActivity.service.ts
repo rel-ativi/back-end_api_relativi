@@ -76,35 +76,26 @@ const createActivityService = async (
     throw new AppError("Country not found", 404);
   }
 
-  const addresses = await addressRepo.find();
   const schedules = await activityScheduleRepo.find();
 
-  const activityAlreadyExists = profile.activities.find(
-    (act) => act.name === name
-  );
+  const activityAlreadyExists = await activityRepo.findOneBy({
+    name: name,
+  });
 
   if (activityAlreadyExists) {
     throw new AppError("Activity name already used");
   }
 
-  const addressAlreadyExists = addresses.find(
-    (adrs) => adrs.street === address.street && adrs.number === address.number
-  );
-
-  let newAddress: Address;
-
-  if (!addressAlreadyExists) {
-    newAddress = addressRepo.create({
-      street: address.street,
-      number: address.number,
-      zip_code: address.zip_code,
-      district: district,
-      city: city,
-      state: state,
-      country: country,
-    });
-    await addressRepo.save(newAddress);
-  }
+  const newAddress = addressRepo.create({
+    street: address.street,
+    number: address.number,
+    zip_code: address.zip_code,
+    district: district,
+    city: city,
+    state: state,
+    country: country,
+  });
+  await addressRepo.save(newAddress);
 
   const starting = new Date(starting_date);
   const now = new Date(Date.now());
@@ -122,7 +113,7 @@ const createActivityService = async (
   activity.category = category;
   activity.recurrent = recurrent;
   activity.starting_date = starting_date;
-  activity.address = addressAlreadyExists || newAddress!;
+  activity.address = newAddress;
   activity.created_by = profile;
   if (min_users) activity.min_users = min_users;
   if (schedule) activity.activity_schedule = schedule;
