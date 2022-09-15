@@ -5,7 +5,6 @@ import { addressRoutes } from "./address.routes";
 import { bankInfoRoutes } from "./bankInfo.routes";
 import { paymentInfoRoutes } from "./paymentInfo.routes";
 import { profileRoutes } from "./profile.routes";
-import { rootRoutes } from "./root.routes";
 import { sessionRoutes } from "./session.routes";
 import { userRoutes } from "./user.routes";
 
