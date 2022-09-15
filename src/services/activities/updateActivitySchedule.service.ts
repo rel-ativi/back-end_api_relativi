@@ -24,7 +24,6 @@ const updateActivityScheduleService = async (
   }
 
   const id = activity.activity_schedule.id;
-  console.log(id);
 
   const schedule = schedules.find((sch) => sch.id === id);
 
@@ -62,11 +61,8 @@ const updateActivityScheduleService = async (
     schedule.days = schedule.days.filter((d) => d.id === "");
     await AppDataSource.manager.save(schedule);
 
-    console.log(daysArray);
     schedule.days = [...daysArray];
     await AppDataSource.manager.save(schedule);
-
-    console.log(schedule);
   }
 
   const updated = await activityScheduleRepo.findOneBy({

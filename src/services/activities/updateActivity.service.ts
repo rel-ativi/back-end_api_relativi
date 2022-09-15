@@ -19,6 +19,7 @@ const updateActivityService = async (
     recurrent,
     activity_schedule_id,
     starting_date,
+    image_url,
   }: ActivityUpdate
 ): Promise<Activity> => {
   const activityRepo = AppDataSource.getRepository(Activity);
@@ -50,6 +51,7 @@ const updateActivityService = async (
     recurrent: recurrent || toUpdate.recurrent,
     activity_schedule: schedule || toUpdate.activity_schedule,
     starting_date: starting_date || toUpdate.starting_date,
+    image_url: image_url || toUpdate.image_url,
   });
 
   const updated = await activityRepo.findOneBy({

@@ -11,7 +11,7 @@ const createUserService = async ({
   name,
   password,
   is_pro_user,
-}: IUserRequest): Promise<IUserResponse> => {
+}: IUserRequest): Promise<User> => {
   const userRepository = AppDataSource.getRepository(User);
   const profileRepository = AppDataSource.getRepository(Profile);
 
@@ -40,10 +40,8 @@ const createUserService = async ({
   });
 
   await userRepository.save(user);
-  const returnUser: IUserResponse = { ...user };
-  delete returnUser.password;
 
-  return returnUser;
+  return user;
 };
 
 export default createUserService;

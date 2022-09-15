@@ -68,8 +68,6 @@ const addressesCreateService = async (
   address.country = country;
   address.created_by = profile!;
 
-  console.log(address);
-
   adressesRepo.create(address);
   await adressesRepo.save(address);
 
