@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
-    "build": "yarn tsc && cp -R /src/docs /dist/src",
+    "build": "yarn tsc && cp -r ./src/docs/* ./dist/src/",
     "test": "jest",
     "typeorm": "typeorm-ts-node-commonjs",
     "start": "node dist/src/server.js"
